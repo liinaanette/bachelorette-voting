@@ -13,13 +13,9 @@ these a few at a time. Aim for ~1200 px wide and under 200 KB each —
 
 | Folder | Venue | Where | Site |
 |---|---|---|---|
-| `stuudio323/` | Stuudio323 | Address not published — ask them | [site](https://www.instagram.com/stuudio323/) |
+| `stuudio323/` | Stuudio323 | Tatari 64, 3rd floor | [site](https://www.instagram.com/stuudio323/) |
 | `jakefarra/` | Jake Farra Studio | Kuldnoka 28, Kristiine | [site](https://jakefarra.com/fotostuudio-rent) |
-| `barefoot/` | Barefoot Studio | Pärnu mnt 142 | [site](https://barefootstudio.ee/stuudio) |
-| `tulbi/` | Tulbi Fotostuudio — Loft hall | Pärnu mnt 142 | [site](https://tulbifoto.ee) |
-| `photoroom/` | Photoroom | Pärnu mnt 142 | [site](https://photoroom.ee) |
 | `fotosioon/` | Fotosioon | Laki 16, 4th floor | [site](https://fotosioon.com/soovid-stuudiot-rentida) |
-| `saal/` | Saal Stuudio | Kaevuri 1, Kopli | [site](https://saalstuudio.ee) |
 | `makeupband/` | Makeupband Studio | Lembitu 7, city centre | [site](https://makeupband.ee/et/stuudio-rent) |
 | `sihi37a/` | Sihi 37a House | Nõmme | [site](https://helinatilk.ee/peoruum) |
 | `bakbak/` | BakBak Stuudio | Marati 5, Põhjala tehas | [site](https://bakbak.ee) |

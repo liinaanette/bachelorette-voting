@@ -41,12 +41,11 @@ window.VENUES = [
     price: "35 €/h weekends",
     estMin: 175,
     estMax: 175,
-    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. Second-cheapest option and walkable from brunch. Instagram-only — no website or online calendar, so someone has to DM them and wait for a reply. It's on the 3rd floor, so worth asking about a lift.",
+    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. One of only two we can walk to from brunch. Instagram-only — no website or online calendar, so someone has to DM them and wait for a reply. It's on the 3rd floor, so worth asking about a lift.",
     travel: "~10 min walk",
     travelMode: "walk",
     link: "https://www.instagram.com/stuudio323/",
     linkLabel: "Instagram",
-    confirmParty: true,
     photos: [
       "images/stuudio323/1.jpg",
       "images/stuudio323/2.jpg",
@@ -66,53 +65,12 @@ window.VENUES = [
     travelMode: "taxi",
     link: "https://jakefarra.com/fotostuudio-rent",
     linkLabel: "Website",
-    confirmParty: true,
-    photos: []
-  },
-  {
-    id: "barefoot",
-    name: "Barefoot Studio",
-    area: "Pärnu mnt 142",
-    price: "35 € 1st h, then 30 €/h",
-    estMin: 155,
-    estMax: 155,
-    notes: "Scandinavian loft with big windows — the best natural light of the cheap options, which matters if we want the photos to look good. Small birthdays are explicitly fine. Two hours of free parking for anyone driving. Same building as Tulbi and Photoroom, so worth comparing all three in one trip.",
-    travel: "~25 min walk or 5 min taxi",
-    travelMode: "walk",
-    link: "https://barefootstudio.ee/stuudio",
-    linkLabel: "Website",
-    confirmParty: true,
-    photos: []
-  },
-  {
-    id: "tulbi",
-    name: "Tulbi Fotostuudio — Loft hall",
-    area: "Pärnu mnt 142",
-    price: "40 € 1st h, then 35 €/h",
-    estMin: 180,
-    estMax: 215,
-    notes: "Darker and cosier than Barefoot upstairs — better for evening-party mood, worse for seeing what you're painting. Suits small groups. Weekends in high season cost more than the listed rate, so the estimate is a range until someone asks for the actual Saturday price.",
-    travel: "~25 min walk or 5 min taxi",
-    travelMode: "walk",
-    link: "https://tulbifoto.ee",
-    linkLabel: "Website",
-    confirmParty: true,
-    photos: []
-  },
-  {
-    id: "photoroom",
-    name: "Photoroom",
-    area: "Pärnu mnt 142",
-    price: "40–45 €/h per room",
-    estMin: 200,
-    estMax: 350,
-    notes: "Textured walls and wooden floors — the most characterful of the three at this address, and the most expensive. One room should do us; two halls together start at 70 €/h and would be overkill for 11. The wide estimate is because of that choice. Was closed Jan–Sept 2026, so confirm they're actually open before anyone gets attached.",
-    travel: "~25 min walk or 5 min taxi",
-    travelMode: "walk",
-    link: "https://photoroom.ee",
-    linkLabel: "Website",
-    confirmParty: true,
-    photos: []
+    photos: [
+      "images/jakefarra/1.jpg",
+      "images/jakefarra/2.jpg",
+      "images/jakefarra/3.jpg",
+      "images/jakefarra/4.jpg"
+    ]
   },
   {
     id: "fotosioon",
@@ -126,22 +84,6 @@ window.VENUES = [
     travelMode: "taxi",
     link: "https://fotosioon.com/soovid-stuudiot-rentida",
     linkLabel: "Website",
-    confirmParty: true,
-    photos: []
-  },
-  {
-    id: "saal",
-    name: "Saal Stuudio",
-    area: "Kaevuri 1, Kopli",
-    price: "30 € + VAT 1st h, then 25 € + VAT",
-    estMin: 159,
-    estMax: 159,
-    notes: "Bright, spacious and by the sea in old Kopli — the nicest setting on the list if we want a walk afterwards. But it's the most purely a photo studio: less of a room you settle into for five hours. Prices are quoted without VAT, unlike everyone else here; the estimate has the 22% added so it's comparable. Full day 150 € + VAT.",
-    travel: "~15 min taxi",
-    travelMode: "taxi",
-    link: "https://saalstuudio.ee",
-    linkLabel: "Website",
-    confirmParty: true,
     photos: []
   },
   {
@@ -151,13 +93,17 @@ window.VENUES = [
     price: "25 €/h (min 3 h)",
     estMin: 100,
     estMax: 125,
-    notes: "Cheapest on the list and the only one we can walk to from brunch — no taxis, no coordinating cars, nobody getting lost. A whole day is 100 €, which is less than five hours at the hourly rate, so ask for the day price. One catch worth settling first: their birthday package is written for up to 10 people and we are 11.",
+    notes: "Cheapest on the list and the closest to brunch — an eight-minute walk, no taxis or coordinating cars. A whole day is 100 €, which is less than five hours at the hourly rate, so ask for the day price. One catch worth settling first: their birthday package is written for up to 10 people and we are 11.",
     travel: "~8 min walk",
     travelMode: "walk",
     link: "https://makeupband.ee/et/stuudio-rent",
     linkLabel: "Website",
-    confirmParty: true,
-    photos: []
+    photos: [
+      "images/makeupband/1.jpg",
+      "images/makeupband/2.jpg",
+      "images/makeupband/3.jpg",
+      "images/makeupband/4.jpg"
+    ]
   },
   {
     id: "sihi37a",
@@ -171,8 +117,10 @@ window.VENUES = [
     travelMode: "taxi",
     link: "https://helinatilk.ee/peoruum",
     linkLabel: "Website",
-    confirmParty: false,
-    photos: []
+    photos: [
+      "images/sihi37a/1.jpg",
+      "images/sihi37a/2.jpg"
+    ]
   },
   {
     id: "bakbak",
@@ -185,7 +133,11 @@ window.VENUES = [
     travelMode: "taxi",
     link: "https://bakbak.ee",
     linkLabel: "Website",
-    confirmParty: true,
-    photos: []
+    photos: [
+      "images/bakbak/1.jpg",
+      "images/bakbak/2.jpg",
+      "images/bakbak/3.jpg",
+      "images/bakbak/4.jpg"
+    ]
   }
 ];
