@@ -95,3 +95,49 @@ grant select, insert            on public.notes to anon;
 -- PostgREST caches the schema, so a freshly created table can be invisible
 -- to the API for a while and inserts come back as PGRST205. This nudges it.
 notify pgrst, 'reload schema';
+
+
+-- ---------------------------------------------------------------
+-- The pot: what everyone is willing to chip in.
+--
+-- Anonymous by construction. A pledge is keyed by a random token the
+-- browser makes up, never by a name, so a row cannot be traced back to a
+-- person even from the dashboard. Individual amounts are never readable
+-- either: anon may write to this table but NOT read it, and the page reads
+-- the budget_totals view below, which only ever returns aggregates.
+-- ---------------------------------------------------------------
+
+create table if not exists public.budgets (
+  token      text primary key,
+  amount     numeric(8,2) not null,
+  updated_at timestamptz  not null default now()
+);
+
+alter table public.budgets enable row level security;
+
+drop policy if exists "anon can pledge"        on public.budgets;
+drop policy if exists "anon can change pledge" on public.budgets;
+
+create policy "anon can pledge"
+  on public.budgets for insert to anon
+  with check (amount >= 0 and amount <= 1000 and length(token) between 8 and 64);
+
+create policy "anon can change pledge"
+  on public.budgets for update to anon
+  using (true) with check (amount >= 0 and amount <= 1000);
+
+-- No select policy on purpose. Nobody, including whoever opens devtools,
+-- can pull the list of individual pledges.
+
+create or replace view public.budget_totals as
+  select
+    coalesce(sum(amount), 0)::numeric    as total,
+    count(*)::int                        as people,
+    coalesce(round(avg(amount), 2), 0)::numeric as average
+  from public.budgets;
+
+-- Write to the table, read only the aggregate.
+grant insert, update on public.budgets      to anon;
+grant select         on public.budget_totals to anon;
+
+notify pgrst, 'reload schema';

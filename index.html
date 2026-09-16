@@ -58,6 +58,24 @@
     </div>
   </nav>
 
+  <section class="pot" id="pot">
+    <h2 class="pot__title">What we can spend</h2>
+    <p class="pot__figure" id="potFigure">—</p>
+    <p class="pot__detail" id="potDetail">Nobody has said yet.</p>
+
+    <form class="pot__form" id="pledgeForm" autocomplete="off" novalidate>
+      <label class="pot__label" for="pledgeInput">I can put in</label>
+      <span class="pot__field">
+        <span class="pot__euro">€</span>
+        <input class="pot__input" id="pledgeInput" type="number" inputmode="decimal"
+               min="0" max="1000" step="5" placeholder="0" aria-label="What you can put in, in euros">
+      </span>
+      <button class="btn btn--primary btn--small" type="submit" id="pledgeSubmit">Save</button>
+    </form>
+    <p class="pot__privacy">Anonymous — only the total is shown, never who said what. Change it whenever; the total follows.</p>
+    <p class="namebar__error" id="pledgeError" role="alert" hidden></p>
+  </section>
+
   <section class="venues" id="venues" aria-label="Venues"></section>
 
   <section class="results" id="results">
@@ -134,6 +152,7 @@
           <span class="money__value money__value--accent" data-perperson></span>
         </div>
       </div>
+      <p class="card__afford" data-afford hidden></p>
       <p class="card__travel" data-travel hidden><span class="card__travel-icon" data-travel-icon></span><span data-travel-text></span></p>
       <p class="card__notes" data-notes></p>
       <p class="card__flag" data-flag hidden></p>

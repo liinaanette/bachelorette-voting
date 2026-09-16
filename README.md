@@ -176,6 +176,8 @@ delete from public.votes where voter_name = 'Kadri';   -- just one person
 
 truncate table public.notes;      -- clears the ideas wall
 delete from public.notes where id = 12;                -- remove one note
+
+truncate table public.budgets;    -- clears everyone's pledges
 ```
 
 Note that the anon key deliberately **cannot delete anything** — that's what
@@ -203,6 +205,16 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
   There's no submit button, every tap saves immediately.
 - **No anti-cheating**, deliberately. Anyone could vote as someone else. It's
   eleven friends deciding where to paint.
+- **The pot.** Everyone says anonymously what they can chip in; the page shows
+  only the total, the count and the average. A pledge is keyed by a random
+  token the browser invents, never by a name, so no row can be traced to a
+  person — and `anon` can write to `budgets` but not read it, so individual
+  amounts never leave the server. The page reads the `budget_totals` view,
+  which returns aggregates only.
+
+  While fewer than 10 have answered, venues are judged against the *projected*
+  pot (the current average × 10) rather than the part-filled one — otherwise
+  everything looks unaffordable simply because people haven't replied yet.
 - **Ideas wall.** A shared notes box under the results for everything that
   isn't a venue: what to paint, snacks, drinks, timings. Same trust model as
   voting — anyone can post, nobody can delete or edit someone else's note.

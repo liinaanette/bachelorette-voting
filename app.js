@@ -32,6 +32,7 @@
     votes: new Map(), // voter name -> array of venue ids
     sort: "default",
     notes: [],
+    pot: null,        // {total, people, average} once anyone has pledged
     mode: configured && libLoaded ? "cloud" : "local",
     error: configured && !libLoaded
       ? "Couldn't load the voting library, so your picks are only saved on this phone for now. Try again on a different connection."
@@ -61,6 +62,11 @@
     dock: document.getElementById("dock"),
     dockCount: document.getElementById("dockCount"),
     dockJump: document.getElementById("dockJump"),
+    potFigure: document.getElementById("potFigure"),
+    potDetail: document.getElementById("potDetail"),
+    pledgeForm: document.getElementById("pledgeForm"),
+    pledgeInput: document.getElementById("pledgeInput"),
+    pledgeError: document.getElementById("pledgeError"),
     noteForm: document.getElementById("noteForm"),
     noteInput: document.getElementById("noteInput"),
     noteCount: document.getElementById("noteCount"),
@@ -368,6 +374,7 @@
         root: node,
         voteBtn: voteBtn,
         count: node.querySelector("[data-votecount]"),
+        afford: node.querySelector("[data-afford]"),
         voters: node.querySelector("[data-voters]")
       });
       frag.appendChild(node);
@@ -427,6 +434,23 @@
         card.voters.textContent = "Picked by " + voters.join(", ");
       } else {
         card.voters.hidden = true;
+      }
+
+      var pot = potProjected();
+      if (pot !== null && !v.quoteOnly && typeof v.estMin === "number") {
+        var worst = v.estMax || v.estMin;
+        var everyone = state.pot.people >= SPLIT_BETWEEN;
+        card.afford.hidden = false;
+        if (worst <= pot) {
+          card.afford.className = "card__afford is-covered";
+          card.afford.textContent = everyone ? "Covered by the pot" : "Covered, at the current average";
+        } else {
+          card.afford.className = "card__afford is-short";
+          card.afford.textContent = euro(worst - pot) +
+            (everyone ? " more than the pot" : " over what we're on track for");
+        }
+      } else {
+        card.afford.hidden = true;
       }
 
       card.root.classList.toggle("is-picked", picked);
@@ -623,6 +647,98 @@
       });
   }
 
+  /* ---------- the pot ---------- */
+
+  var KEY_PLEDGE_TOKEN = "bv.pledgeToken";
+  var KEY_MY_PLEDGE = "bv.myPledge";
+
+  // A pledge is keyed by a random token, never by name, so the database
+  // cannot say who offered what. The token lives only in this browser.
+  function pledgeToken() {
+    var t = lsGet(KEY_PLEDGE_TOKEN);
+    if (!t) {
+      t = (window.crypto && window.crypto.randomUUID)
+        ? window.crypto.randomUUID()
+        : "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 14);
+      lsSet(KEY_PLEDGE_TOKEN, t);
+    }
+    return t;
+  }
+
+  // What the pot would come to if everyone still to answer chips in at the
+  // current average. Judging venues against a part-filled pot would mark
+  // everything unaffordable just because seven people haven't replied.
+  function potProjected() {
+    var p = state.pot;
+    if (!p || !p.people) return null;
+    return p.people >= SPLIT_BETWEEN ? p.total : p.average * SPLIT_BETWEEN;
+  }
+
+  function renderPot() {
+    if (!state.pot || !state.pot.people) {
+      el.potFigure.textContent = "—";
+      el.potDetail.textContent = "Nobody has said yet. Put the first number in.";
+      return;
+    }
+    var p = state.pot;
+    var everyone = p.people >= SPLIT_BETWEEN;
+    el.potFigure.textContent = euro(p.total);
+    el.potDetail.textContent = everyone
+      ? "All " + SPLIT_BETWEEN + " have answered · " + euro(p.average) + " each on average"
+      : p.people + " of " + SPLIT_BETWEEN + " have answered · " + euro(p.average) +
+        " each so far, which would make " + euro(potProjected()) + " if the rest match";
+  }
+
+  function loadPot() {
+    if (state.mode !== "cloud") return;
+    return supa.from("budget_totals").select("total, people, average")
+      .then(function (res) {
+        if (res.error) throw res.error;
+        var row = (res.data || [])[0];
+        state.pot = row
+          ? { total: Number(row.total), people: Number(row.people), average: Number(row.average) }
+          : null;
+        renderPot();
+        renderCards();
+      })
+      .catch(function (err) { console.error("pot load failed", err); });
+  }
+
+  function savePledge(amount) {
+    if (state.mode !== "cloud") {
+      el.pledgeError.hidden = false;
+      el.pledgeError.textContent = "Not connected to the shared board, so this can't be saved.";
+      return;
+    }
+    supa.from("budgets")
+      .upsert({ token: pledgeToken(), amount: amount, updated_at: new Date().toISOString() },
+              { onConflict: "token" })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        lsSet(KEY_MY_PLEDGE, String(amount));
+        el.pledgeError.hidden = true;
+        return loadPot();
+      })
+      .catch(function (err) {
+        console.error("pledge failed", err);
+        el.pledgeError.hidden = false;
+        el.pledgeError.textContent = "Couldn't save that. " + describeError(err);
+      });
+  }
+
+  el.pledgeForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = el.pledgeInput.value.trim();
+    var n = parseFloat(raw);
+    if (raw === "" || isNaN(n) || n < 0 || n > 1000) {
+      el.pledgeError.hidden = false;
+      el.pledgeError.textContent = "Give a number between 0 and 1000.";
+      return;
+    }
+    el.pledgeError.hidden = true;
+    savePledge(Math.round(n * 100) / 100);
+  });
+
   /* ---------- ideas wall ---------- */
 
   var KEY_LOCAL_NOTES = "bv.localNotes";
@@ -813,7 +929,11 @@
   var saved = normalizeName(lsGet(KEY_NAME));
   if (saved.length >= 2) state.name = saved;
 
+  var myPledge = lsGet(KEY_MY_PLEDGE);
+  if (myPledge) el.pledgeInput.value = myPledge;
+
   buildCards();
+  renderPot();
 
   if (state.mode === "cloud") {
     supa = window.supabase.createClient(cfg.url, cfg.anonKey);
@@ -822,6 +942,7 @@
 
     loadCloud();
     loadNotes();
+    loadPot();
 
     // Live updates. Realtime has to be switched on for both tables (see
     // README); the poll below covers us if it isn't, or if the socket drops.
@@ -843,6 +964,7 @@
       if (document.hidden) return;
       loadCloud();
       loadNotes();
+      loadPot();   // no realtime here: reading pledges at all is not permitted
     }
     setInterval(refreshAll, POLL_MS);
     document.addEventListener("visibilitychange", refreshAll);

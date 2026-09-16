@@ -971,3 +971,103 @@ body {
   white-space: pre-wrap;   /* keep the line breaks people type */
   overflow-wrap: anywhere; /* and never let a long word widen the page */
 }
+
+/* ---------- the pot ---------- */
+
+.pot {
+  margin-bottom: 18px;
+  padding: 18px;
+  background: linear-gradient(135deg, #fbf1f5, #fdf4e9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.pot__title {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--plum-deep);
+}
+
+.pot__figure {
+  margin: 2px 0 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--plum);
+}
+
+.pot__detail {
+  margin: 2px 0 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.pot__form {
+  display: flex;
+  align-items: center;
+  gap: 8px 10px;
+  flex-wrap: wrap;
+}
+
+.pot__label {
+  flex: 1 0 100%;        /* its own line, so field + Save sit together below */
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pot__field {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+}
+
+.pot__field:focus-within {
+  border-color: var(--plum);
+  box-shadow: 0 0 0 3px rgba(140, 63, 104, .15);
+}
+
+.pot__euro { font-size: 15px; color: var(--ink-soft); }
+
+.pot__input {
+  width: 64px;
+  border: 0;
+  padding: 2px 0;
+  font: inherit;
+  font-size: 16px;          /* under 16px and iOS zooms the page on focus */
+  font-weight: 600;
+  color: var(--plum-deep);
+  background: transparent;
+  text-align: center;
+}
+
+.pot__input:focus { outline: none; }
+
+/* spinner arrows are useless on a phone and eat the width */
+.pot__input::-webkit-outer-spin-button,
+.pot__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pot__input { -moz-appearance: textfield; appearance: textfield; }
+
+.pot__privacy {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* per-card verdict against the pot */
+.card__afford {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card__afford.is-covered { color: #3f7566; }
+.card__afford.is-short   { color: #a12f4c; }
