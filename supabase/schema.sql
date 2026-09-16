@@ -78,3 +78,20 @@ exception
   when duplicate_object then null;
 end
 $$;
+
+
+-- ---------------------------------------------------------------
+-- Privileges and API cache.
+--
+-- A row level security policy says what a role MAY do, but the role also
+-- needs the plain table grant. Supabase normally adds these by default;
+-- granting them explicitly makes this file work on its own.
+-- ---------------------------------------------------------------
+
+grant usage on schema public to anon;
+grant select, insert, update on public.votes to anon;
+grant select, insert            on public.notes to anon;
+
+-- PostgREST caches the schema, so a freshly created table can be invisible
+-- to the API for a while and inserts come back as PGRST205. This nudges it.
+notify pgrst, 'reload schema';

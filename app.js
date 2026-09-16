@@ -679,6 +679,27 @@
     el.noteCount.classList.toggle("is-low", left <= 30);
   }
 
+  // The generic "check your connection" hid the actual cause, which matters
+  // when the thing that is wrong is the database rather than the phone.
+  function describeError(err) {
+    if (!err) return "Unknown error.";
+    var code = err.code || "";
+    var msg = err.message || String(err);
+    if (code === "PGRST205" || /schema cache/i.test(msg)) {
+      return "The API hasn't noticed the notes table yet. In Supabase run: notify pgrst, 'reload schema';";
+    }
+    if (code === "42P01" || /does not exist/i.test(msg)) {
+      return "The notes table is missing — supabase/schema.sql hasn't been run yet.";
+    }
+    if (code === "42501" || /row-level security|permission denied/i.test(msg)) {
+      return "The database refused it (permissions). Re-run supabase/schema.sql.";
+    }
+    if (/failed to fetch|networkerror|load failed/i.test(msg)) {
+      return "Couldn't reach the server — check your connection.";
+    }
+    return msg + (code ? " (" + code + ")" : "");
+  }
+
   function saveLocalNotes() {
     lsSet(KEY_LOCAL_NOTES, JSON.stringify(state.notes));
   }
@@ -702,7 +723,7 @@
         if (at !== -1) state.notes.splice(at, 1);
         renderNotes();
         el.noteError.hidden = false;
-        el.noteError.textContent = "That didn't save — check your connection and try again.";
+        el.noteError.textContent = "Couldn't save that. " + describeError(err);
         el.noteInput.value = note.body;
         updateNoteCount();
       });
