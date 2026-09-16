@@ -59,23 +59,38 @@ than a few seconds stale — it just won't be instant.
 
 ## 2. Put it online
 
-### GitHub Pages (free, already wired up)
+There's no build step, so any static host works. All of these redeploy by
+themselves every time you push.
 
-`.github/workflows/pages.yml` publishes the site on every push to `main`.
+### Vercel
 
-1. Merge this branch into `main`.
-2. Repo → **Settings** → **Pages** → under **Build and deployment**, set
+1. [vercel.com](https://vercel.com) → **Continue with GitHub**.
+2. **Add New…** → **Project** → import `bachelorette-voting`.
+3. It'll ask for a **Framework Preset** — choose **Other**, and leave the
+   build command and output directory empty. There's nothing to build.
+4. **Deploy**.
+5. **Settings** → **Domains** to rename it to something you'd rather send to
+   a group chat — the default URL has the repo name in it.
+
+### Netlify
+
+Same idea: **Add new site** → **Import an existing project** → pick the repo →
+leave the build command empty and set the publish directory to `/`. Rename
+under **Site configuration** → **Change site name**.
+
+### GitHub Pages
+
+`.github/workflows/pages.yml` is committed and ready, but Pages has to be
+switched on by hand first — the workflow token isn't allowed to do it
+(`Create Pages site failed: Resource not accessible by integration`).
+
+1. Repo → **Settings** → **Pages** → **Build and deployment** → set
    **Source** to **GitHub Actions**.
-3. The next push deploys. Your link will be:
+2. Push anything, or re-run the workflow from the **Actions** tab.
+3. Lands at **https://liinaanette.github.io/bachelorette-voting/**
 
-   **https://liinaanette.github.io/bachelorette-voting/**
-
-Check the **Actions** tab if you want to watch it build.
-
-### Netlify (if you'd rather)
-
-New site → import this repo → leave the build command empty and set the publish
-directory to `/`. Netlify gives you a nicer-looking URL you can rename.
+That URL can't be changed without renaming the repo, which is worth thinking
+about if the bride is in the chat you're sending it to.
 
 ---
 
