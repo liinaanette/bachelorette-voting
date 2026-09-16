@@ -202,40 +202,68 @@
     return img;
   }
 
-  // A clip behaves like a photo in the strip: muted, looping, no controls.
-  // It only downloads and plays while it's actually on screen — autoplaying
-  // every video on the page would burn a lot of someone's mobile data.
+  // A clip behaves like a photo in the strip: muted, looping, no chrome.
+  // It only downloads once scrolled into view, so nobody streams it by
+  // scrolling past. Autoplay is a best effort — Low Power Mode, data saver
+  // and stricter browsers all refuse it — so there is always a tap target
+  // and a visible play button rather than a poster that does nothing.
   function videoSlide(src, venue) {
+    var wrap = document.createElement("div");
+    wrap.className = "videoslide";
+
     var vid = document.createElement("video");
     vid.className = "photo photo--video";
     vid.muted = true;
+    vid.setAttribute("muted", "");            // iOS wants the attribute, not just the property
     vid.loop = true;
+    vid.setAttribute("loop", "");
     vid.playsInline = true;
-    vid.setAttribute("playsinline", "");       // Safari needs the attribute too
+    vid.setAttribute("playsinline", "");
     vid.setAttribute("webkit-playsinline", "");
     vid.preload = "none";
     vid.poster = src.replace(/\.mp4$/i, ".jpg");
     vid.setAttribute("aria-label", venue.name + " — short clip");
 
-    if (!("IntersectionObserver" in window)) {
-      // old browser: leave the poster showing rather than downloading blind
-      return vid;
-    }
+    var badge = document.createElement("button");
+    badge.className = "videoslide__play";
+    badge.type = "button";
+    badge.setAttribute("aria-label", "Play clip");
+    badge.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+    wrap.appendChild(vid);
+    wrap.appendChild(badge);
 
     var loaded = false;
+    function ensureLoaded() {
+      if (loaded) return;
+      vid.src = src;
+      vid.load();          // preload="none" means it has nothing until we ask
+      loaded = true;
+    }
+    function attempt() {
+      ensureLoaded();
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () { /* refused — the badge stays */ });
+    }
+
+    vid.addEventListener("playing", function () { wrap.classList.add("is-playing"); });
+    vid.addEventListener("pause", function () { wrap.classList.remove("is-playing"); });
+
+    badge.addEventListener("click", function (e) {
+      e.preventDefault();
+      attempt();            // a real tap, so this is allowed everywhere
+    });
+
+    if (!("IntersectionObserver" in window)) return wrap;
+
     new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          if (!loaded) { vid.src = src; loaded = true; }
-          var p = vid.play();
-          if (p && p.catch) p.catch(function () { /* autoplay refused; poster stays */ });
-        } else if (loaded) {
-          vid.pause();
-        }
+        if (entry.isIntersecting) attempt();
+        else if (loaded) vid.pause();
       });
     }, { threshold: 0.4 }).observe(vid);
 
-    return vid;
+    return wrap;
   }
 
   function addDots(card, strip, count) {

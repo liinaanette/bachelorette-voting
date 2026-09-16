@@ -156,9 +156,13 @@ with dots underneath.
 
 **Video works too.** List an `.mp4` and put a `.jpg` of the same name beside it
 as the poster frame (`images/lovepaint/1.mp4` + `1.jpg`). Clips play muted and
-looping with no controls, and only download once scrolled into view. Keep them
-short and under ~1.5 MB; phones pay for every byte. Use H.264 — it's the codec
-every phone decodes.
+looping, and only download once scrolled into view. Keep them short and under
+~1.5 MB; phones pay for every byte. Use H.264 — it's the codec every phone
+decodes.
+
+Autoplay is never guaranteed: Low Power Mode, data saver and stricter browsers
+all refuse it. When that happens the poster stays with a play button over it,
+so the clip is always one tap away rather than a still that does nothing.
 
 ---
 
