@@ -19,6 +19,8 @@
      linkLabel: "Website",
      confirmParty: true,             // shows the "confirm paint & wine" warning
      flag:      "Something is wrong with this one",   // optional red warning
+     estLabel:  "All in · 3–3.5 h",  // optional, default is "Est. total · 5 h"
+     tag:       "Hosted — no organising",  // optional extra chip
      photos:    ["images/foo/1.jpg"] // 1–3 images; leave [] for a placeholder
    }
 
@@ -41,7 +43,7 @@ window.VENUES = [
     price: "35 €/h weekends",
     estMin: 175,
     estMax: 175,
-    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. One of only two we can walk to from brunch. Instagram-only — no website or online calendar, so someone has to DM them and wait for a reply. It's on the 3rd floor, so worth asking about a lift.",
+    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. Second cheapest, and one of only two we can walk to from brunch. Instagram-only — no website or online calendar, so someone has to DM them and wait for a reply. It's on the 3rd floor, so worth asking about a lift.",
     travel: "~10 min walk",
     travelMode: "walk",
     link: "https://www.instagram.com/stuudio323/",
@@ -52,6 +54,20 @@ window.VENUES = [
       "images/stuudio323/3.jpg",
       "images/stuudio323/4.jpg"
     ]
+  },
+  {
+    id: "loow",
+    name: "LOOW Stuudio",
+    area: "Tatari 64, city centre",
+    price: "25 €/h weekends (min 3 h)",
+    estMin: 125,
+    estMax: 150,
+    notes: "Cosy Scandinavian room with high ceilings, up to 25. Birthdays are a listed use and a past client has actually run a sip & paint here — the only venue where someone has already done exactly our evening. Full kitchen, 65\" TV, door-code access 08:00–24:00, so no waiting on a keyholder. Day rate is 150 €, barely more than five hours, so ask for it. Budget a further 40 € unless we tidy up ourselves.",
+    travel: "~10 min walk",
+    travelMode: "walk",
+    link: "https://loow.ee",
+    linkLabel: "Website",
+    photos: []
   },
   {
     id: "jakefarra",
@@ -73,20 +89,6 @@ window.VENUES = [
     ]
   },
   {
-    id: "fotosioon",
-    name: "Fotosioon",
-    area: "Laki 16, 4th floor",
-    price: "30 €/h, 25 €/h from 3rd h",
-    estMin: 135,
-    estMax: 135,
-    notes: "Second cheapest, and the rate drops after two hours, so it gets better the longer we stay — a whole day is 175 € if we wanted to stretch out. Two catches: it's out in the Laki industrial area with nothing around it, and it's on the 4th floor with no lift mentioned, which is a real question with 11 people and a lot of bags.",
-    travel: "~10 min taxi",
-    travelMode: "taxi",
-    link: "https://fotosioon.com/soovid-stuudiot-rentida",
-    linkLabel: "Website",
-    photos: []
-  },
-  {
     id: "makeupband",
     name: "Makeupband Studio",
     area: "Lembitu 7, city centre",
@@ -104,6 +106,19 @@ window.VENUES = [
       "images/makeupband/3.jpg",
       "images/makeupband/4.jpg"
     ]
+  },
+  {
+    id: "shizen",
+    name: "Shizen Stuudio",
+    area: "Laki 4",
+    price: "Price on request",
+    quoteOnly: true,
+    notes: "Bright room that seats all 20 at one table, which no other option here does — everyone painting together rather than split across two rooms. Kitchen corner with glasses and plates, own food and drinks welcome, decorating allowed, free parking. Price only on request from grete@shizen.ee. They also run their own texture-painting-and-wine workshop from 44 €/person if we'd rather not organise the painting ourselves.",
+    travel: "~10 min taxi",
+    travelMode: "taxi",
+    link: "mailto:grete@shizen.ee",
+    linkLabel: "Email for a quote",
+    photos: []
   },
   {
     id: "sihi37a",
@@ -139,5 +154,21 @@ window.VENUES = [
       "images/bakbak/3.jpg",
       "images/bakbak/4.jpg"
     ]
+  },
+  {
+    id: "lovepaint",
+    name: "LovePaint",
+    area: "Tatari 64, 2nd floor — same building as LOOW",
+    price: "560 € for 11, all in",
+    estMin: 560,
+    estMax: 560,
+    estLabel: "All in · 3–3.5 h",
+    tag: "Hosted — no organising",
+    notes: "Not a room we rent: a hosted art party with an artist guiding everyone. The 560 € covers the artist, all materials and the drinks — a bottle of wine per two people, plus alcohol-free fizz — so it isn't really comparable to a bare room, where paint, canvases and wine are all still to buy. Shorter at 3–3.5 h, and still much the priciest, but nobody plans, shops or cleans up. Snacks 30 € extra. There's also a bachelorette package from 490 € for 8, with decorations, a photo zone, a Bride Team programme and 10 Polaroids. Minimum 8 on Fri/Sat, so 11 is fine.",
+    travel: "~10 min walk",
+    travelMode: "walk",
+    link: "https://lovepaint.eu/et/tudrukuteohtud-ja-sunnipaevad",
+    linkLabel: "Website",
+    photos: []
   }
 ];

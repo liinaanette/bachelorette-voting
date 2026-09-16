@@ -736,3 +736,9 @@ body {
   background: #fff;
   transform: scale(1.35);
 }
+
+/* a venue that works differently from the rest (e.g. hosted, not rented) */
+.chip--tag {
+  background: #e7e0f2;
+  color: #584482;
+}

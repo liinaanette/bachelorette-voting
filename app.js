@@ -237,6 +237,12 @@
       node.querySelector("[data-name]").textContent = v.name;
       node.querySelector("[data-area]").textContent = v.area || "";
       node.querySelector("[data-price]").textContent = v.price || "";
+      if (v.estLabel) node.querySelector("[data-estlabel]").textContent = v.estLabel;
+      if (v.tag) {
+        var tag = node.querySelector("[data-tag]");
+        tag.hidden = false;
+        tag.textContent = v.tag;
+      }
       node.querySelector("[data-total]").textContent = totalText(v);
       node.querySelector("[data-perperson]").textContent = perPersonText(v);
       node.querySelector("[data-notes]").textContent = v.notes || "";
