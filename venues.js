@@ -19,11 +19,12 @@
      linkLabel: "Website",
      confirmParty: true,             // shows the "confirm paint & wine" warning
      flag:      "Something is wrong with this one",   // optional red warning
-     photos:    ["images/foo-1.jpg"] // 1–3 images; leave [] for a placeholder
+     photos:    ["images/foo/1.jpg"] // 1–3 images; leave [] for a placeholder
    }
 
    No photos yet — every venue draws a generated placeholder until you drop
-   real images into /images and list them. See README.md.
+   real images into its own folder under /images and list them here.
+   See images/README.md for the folder-to-venue map.
 
    Travel times are rough estimates from Morel (Toom-Kuninga 21), measured
    by eye rather than routed — check anything borderline in a maps app.
@@ -152,23 +153,6 @@ window.VENUES = [
     link: "https://makeupband.ee/et/stuudio-rent",
     linkLabel: "Website",
     confirmParty: true,
-    photos: []
-  },
-  {
-    id: "tagahoov",
-    name: "Tagahoov",
-    area: "Kastani 42, Aparaaditehas — TARTU",
-    price: "250 € first 3 h, then 60 €/h",
-    estMin: 370,
-    estMax: 370,
-    notes: "A real event space rather than a photo studio, 240 m² for up to 50, and adult parties are what they do — but it is in Tartu, not Tallinn. Their own site gives the address as Aparaaditehas, Kastani 42, third floor.",
-    travel: "~2.5 h drive — this is in another city",
-    travelMode: "taxi",
-    travelStandalone: true,
-    flag: "This venue is in Tartu, roughly 185 km away. Almost certainly a mistake on the list.",
-    link: "https://tagahoov.com",
-    linkLabel: "Website",
-    confirmParty: false,
     photos: []
   },
   {

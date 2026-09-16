@@ -12,6 +12,7 @@ styles.css          the looks
 app.js              voting logic
 venues.js      ←    the only file you edit to change venues
 config.js      ←    your Supabase keys go here
+images/             one folder per venue, for photos
 supabase/schema.sql the one-time database setup
 ```
 
@@ -112,7 +113,7 @@ reorder freely — the page rebuilds itself from that list.
   link: "https://barefootstudio.ee/stuudio",
   linkLabel: "Website",
   confirmParty: true,             // shows the paint-&-wine warning
-  photos: []                      // or ["images/barefoot-1.jpg", …]
+  photos: []                      // or ["images/barefoot/1.jpg", …]
 }
 ```
 
@@ -137,11 +138,16 @@ To add them:
 1. Save 1–3 photos per venue — from the venue's own site, their Instagram, or
    screenshots. Aim for roughly 1200 px wide and under ~200 KB each;
    [squoosh.app](https://squoosh.app) does the compressing in the browser.
-2. Make an `images/` folder, drop them in, and list them on the venue:
+2. Each venue has its own folder under `images/` already — drop the files in
+   the matching one, then list them on that venue:
 
    ```js
-   photos: ["images/barefoot-1.jpg", "images/barefoot-2.jpg"]
+   photos: ["images/barefoot/1.jpg", "images/barefoot/2.jpg"]
    ```
+
+   [`images/README.md`](images/README.md) maps every folder to its venue and
+   website. Added a new venue? `node scripts/make-image-folders.mjs` creates
+   its folder and refreshes that index.
 
 3. Commit and push. Any venue still on `photos: []` keeps its placeholder, so
    you can do this a few venues at a time.

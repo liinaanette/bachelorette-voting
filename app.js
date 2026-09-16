@@ -115,6 +115,17 @@
     return voters;
   }
 
+  // A venue removed from venues.js after people voted would otherwise still
+  // occupy a slot: the stored array says 3 picks while only 2 cards show one,
+  // and the voter can't choose a replacement. Drop unknown ids on the way in.
+  var KNOWN_IDS = {};
+  VENUES.forEach(function (v) { KNOWN_IDS[v.id] = true; });
+
+  function cleanPicks(ids) {
+    if (!Array.isArray(ids)) return [];
+    return ids.filter(function (id) { return KNOWN_IDS[id]; }).slice(0, MAX_PICKS);
+  }
+
   function myPicks() {
     return state.name ? (state.votes.get(state.name) || []) : [];
   }
@@ -462,7 +473,7 @@
     try {
       var all = JSON.parse(raw);
       Object.keys(all).forEach(function (voter) {
-        if (Array.isArray(all[voter])) state.votes.set(voter, all[voter]);
+        if (Array.isArray(all[voter])) state.votes.set(voter, cleanPicks(all[voter]));
       });
     } catch (e) { /* corrupt, ignore */ }
   }
@@ -473,7 +484,7 @@
         if (res.error) throw res.error;
         var next = new Map();
         (res.data || []).forEach(function (row) {
-          next.set(row.voter_name, Array.isArray(row.venue_ids) ? row.venue_ids : []);
+          next.set(row.voter_name, cleanPicks(row.venue_ids));
         });
         // A refresh that lands while our own save is still in flight would
         // otherwise show us the pre-save row and make the tap look undone.
