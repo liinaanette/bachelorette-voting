@@ -102,9 +102,16 @@ notify pgrst, 'reload schema';
 --
 -- Anonymous by construction. A pledge is keyed by a random token the
 -- browser makes up, never by a name, so a row cannot be traced back to a
--- person even from the dashboard. Individual amounts are never readable
--- either: anon may write to this table but NOT read it, and the page reads
--- the budget_totals view below, which only ever returns aggregates.
+-- person even from the dashboard.
+--
+-- anon has NO access to this table at all -- not select, not insert, not
+-- update. It can only call set_pledge() below, which runs as the owner and
+-- does its own validation, and read the aggregates-only view. That means
+-- individual amounts cannot be read back by anyone using the public key.
+--
+-- (Writing directly with an upsert does not work here and cannot be made
+-- to: INSERT ... ON CONFLICT DO UPDATE needs SELECT privilege on the
+-- conflict column, which is exactly the privilege being withheld.)
 -- ---------------------------------------------------------------
 
 create table if not exists public.budgets (
@@ -115,29 +122,41 @@ create table if not exists public.budgets (
 
 alter table public.budgets enable row level security;
 
+-- Undo the earlier direct-write attempt, if this file was run before.
 drop policy if exists "anon can pledge"        on public.budgets;
 drop policy if exists "anon can change pledge" on public.budgets;
+revoke all on public.budgets from anon;
 
-create policy "anon can pledge"
-  on public.budgets for insert to anon
-  with check (amount >= 0 and amount <= 1000 and length(token) between 8 and 64);
+create or replace function public.set_pledge(p_token text, p_amount numeric)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if p_amount is null or p_amount < 0 or p_amount > 1000 then
+    raise exception 'amount out of range';
+  end if;
+  if p_token is null or length(p_token) not between 8 and 64 then
+    raise exception 'bad token';
+  end if;
 
-create policy "anon can change pledge"
-  on public.budgets for update to anon
-  using (true) with check (amount >= 0 and amount <= 1000);
-
--- No select policy on purpose. Nobody, including whoever opens devtools,
--- can pull the list of individual pledges.
+  insert into public.budgets (token, amount, updated_at)
+  values (p_token, p_amount, now())
+  on conflict (token) do update
+    set amount = excluded.amount, updated_at = now();
+end
+$$;
 
 create or replace view public.budget_totals as
   select
-    coalesce(sum(amount), 0)::numeric    as total,
-    count(*)::int                        as people,
-    coalesce(round(avg(amount), 2), 0)::numeric as average
+    coalesce(sum(amount), 0)::numeric            as total,
+    count(*)::int                                as people,
+    coalesce(round(avg(amount), 2), 0)::numeric  as average
   from public.budgets;
 
--- Write to the table, read only the aggregate.
-grant insert, update on public.budgets      to anon;
-grant select         on public.budget_totals to anon;
+revoke all on function public.set_pledge(text, numeric) from public;
+grant execute on function public.set_pledge(text, numeric) to anon;
+grant select on public.budget_totals to anon;
 
 notify pgrst, 'reload schema';

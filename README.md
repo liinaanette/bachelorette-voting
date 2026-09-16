@@ -208,9 +208,14 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
 - **The pot.** Everyone says anonymously what they can chip in; the page shows
   only the total, the count and the average. A pledge is keyed by a random
   token the browser invents, never by a name, so no row can be traced to a
-  person — and `anon` can write to `budgets` but not read it, so individual
-  amounts never leave the server. The page reads the `budget_totals` view,
-  which returns aggregates only.
+  person. `anon` has **no access to the `budgets` table at all** — it can only
+  call `set_pledge()`, a `security definer` function that validates and writes
+  on its behalf, and read `budget_totals`, which returns aggregates only. So
+  individual amounts cannot be read back with the public key.
+
+  (Writing directly with an upsert cannot work here: `INSERT … ON CONFLICT DO
+  UPDATE` needs SELECT privilege on the conflict column, which is precisely
+  the privilege being withheld. Hence the function.)
 
   While fewer than 10 have answered, venues are judged against the *projected*
   pot (the current average × 10) rather than the part-filled one — otherwise

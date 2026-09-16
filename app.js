@@ -710,9 +710,9 @@
       el.pledgeError.textContent = "Not connected to the shared board, so this can't be saved.";
       return;
     }
-    supa.from("budgets")
-      .upsert({ token: pledgeToken(), amount: amount, updated_at: new Date().toISOString() },
-              { onConflict: "token" })
+    // An RPC rather than an upsert: anon has no rights on the budgets table,
+    // which is what keeps individual pledges unreadable.
+    supa.rpc("set_pledge", { p_token: pledgeToken(), p_amount: amount })
       .then(function (res) {
         if (res.error) throw res.error;
         lsSet(KEY_MY_PLEDGE, String(amount));
