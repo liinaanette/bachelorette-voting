@@ -5,7 +5,6 @@
    your own browser, so everyone sees only their own picks. Fine for a
    preview, useless for actually deciding.
 
-   Fill both in and votes become shared and live for the whole group.
    Setup steps are in README.md (about five minutes).
 
    The anon key is *meant* to be public — it's in every visitor's
@@ -13,6 +12,6 @@
 ------------------------------------------------------------------ */
 
 window.SUPABASE_CONFIG = {
-  url: "",      // e.g. "https://abcdefghijklm.supabase.co"
-  anonKey: ""   // the long "anon / public" key from Project Settings → API
+  url: "https://oxltxieyrdtzvxzamhos.supabase.co",
+  anonKey: "sb_publishable_SbEeEf7cxYU1W_xiDUXjcA_6gbbiccs"
 };
