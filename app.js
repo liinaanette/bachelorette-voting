@@ -183,6 +183,52 @@
     return box;
   }
 
+  function imageSlide(src, venue, i) {
+    var img = document.createElement("img");
+    img.className = "photo";
+    img.src = src;
+    img.alt = venue.name + " — photo " + (i + 1);
+    img.loading = i === 0 ? "eager" : "lazy";
+    img.decoding = "async";
+    return img;
+  }
+
+  // A clip behaves like a photo in the strip: muted, looping, no controls.
+  // It only downloads and plays while it's actually on screen — autoplaying
+  // every video on the page would burn a lot of someone's mobile data.
+  function videoSlide(src, venue) {
+    var vid = document.createElement("video");
+    vid.className = "photo photo--video";
+    vid.muted = true;
+    vid.loop = true;
+    vid.playsInline = true;
+    vid.setAttribute("playsinline", "");       // Safari needs the attribute too
+    vid.setAttribute("webkit-playsinline", "");
+    vid.preload = "none";
+    vid.poster = src.replace(/\.mp4$/i, ".jpg");
+    vid.setAttribute("aria-label", venue.name + " — short clip");
+
+    if (!("IntersectionObserver" in window)) {
+      // old browser: leave the poster showing rather than downloading blind
+      return vid;
+    }
+
+    var loaded = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!loaded) { vid.src = src; loaded = true; }
+          var p = vid.play();
+          if (p && p.catch) p.catch(function () { /* autoplay refused; poster stays */ });
+        } else if (loaded) {
+          vid.pause();
+        }
+      });
+    }, { threshold: 0.4 }).observe(vid);
+
+    return vid;
+  }
+
   function addDots(card, strip, count) {
     var wrap = document.createElement("div");
     wrap.className = "dots";
@@ -220,13 +266,9 @@
       var photos = node.querySelector("[data-photos]");
       if ((v.photos || []).length) {
         v.photos.forEach(function (src, i) {
-          var img = document.createElement("img");
-          img.className = "photo";
-          img.src = src;
-          img.alt = v.name + " — photo " + (i + 1);
-          img.loading = i === 0 ? "eager" : "lazy";
-          img.decoding = "async";
-          photos.appendChild(img);
+          photos.appendChild(/\.mp4$/i.test(src)
+            ? videoSlide(src, v)
+            : imageSlide(src, v, i));
         });
         // nothing else signals that the strip scrolls, so show dots
         if (v.photos.length > 1) addDots(node, photos, v.photos.length);

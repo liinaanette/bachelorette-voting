@@ -21,7 +21,9 @@
      flag:      "Something is wrong with this one",   // optional red warning
      estLabel:  "All in · 3–3.5 h",  // optional, default is "Est. total · 5 h"
      tag:       "Hosted — no organising",  // optional extra chip
-     photos:    ["images/foo/1.jpg"] // 1–3 images; leave [] for a placeholder
+     photos:    ["images/foo/1.jpg"] // stills, or an .mp4 clip (needs a
+                                     // matching .jpg poster beside it);
+                                     // leave [] for a placeholder
    }
 
    No photos yet — every venue draws a generated placeholder until you drop
@@ -67,7 +69,11 @@ window.VENUES = [
     travelMode: "walk",
     link: "https://loow.ee",
     linkLabel: "Website",
-    photos: []
+    photos: [
+      "images/loow/1.jpg",
+      "images/loow/2.jpg",
+      "images/loow/3.jpg"
+    ]
   },
   {
     id: "jakefarra",
@@ -118,7 +124,14 @@ window.VENUES = [
     travelMode: "taxi",
     link: "mailto:grete@shizen.ee",
     linkLabel: "Email for a quote",
-    photos: []
+    photos: [
+      "images/shizen/1.jpg",
+      "images/shizen/2.jpg",
+      "images/shizen/3.jpg",
+      "images/shizen/4.jpg",
+      "images/shizen/5.jpg",
+      "images/shizen/6.jpg"
+    ]
   },
   {
     id: "sihi37a",
@@ -169,6 +182,8 @@ window.VENUES = [
     travelMode: "walk",
     link: "https://lovepaint.eu/et/tudrukuteohtud-ja-sunnipaevad",
     linkLabel: "Website",
-    photos: []
+    photos: [
+      "images/lovepaint/1.mp4"
+    ]
   }
 ];

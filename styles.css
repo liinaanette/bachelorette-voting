@@ -742,3 +742,9 @@ body {
   background: #e7e0f2;
   color: #584482;
 }
+
+/* a clip sits in the photo strip exactly like a still */
+.photo--video {
+  object-fit: cover;
+  background: var(--blush);
+}
