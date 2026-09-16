@@ -641,3 +641,69 @@ body {
   .card__body { padding: 22px; }
   .tally__bar { flex-basis: 120px; }
 }
+
+/* ---------- travel from brunch ---------- */
+
+.hero__from {
+  margin: 10px auto 0;
+  max-width: 34ch;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.card__travel {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.card__travel.is-walk { color: #3f7566; }
+.card__travel.is-taxi { color: var(--gold); }
+
+.card__travel-icon { font-size: 15px; }
+
+/* a venue with something actually wrong with it */
+.card__flag {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #fdeaea;
+  color: #8c2f2f;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* ---------- booking checklist ---------- */
+
+.asks {
+  margin-top: 26px;
+  padding: 20px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.asks__title {
+  margin: 0 0 12px;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--plum-deep);
+}
+
+.asks__list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.asks__list li { margin-bottom: 7px; }
+.asks__list li:last-child { margin-bottom: 0; }
+.asks__list strong { color: var(--ink); }

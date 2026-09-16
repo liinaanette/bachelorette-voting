@@ -146,6 +146,8 @@
     return (words[0][0] + words[1][0]).toUpperCase();
   }
 
+  var TRAVEL_ICONS = { walk: "\uD83D\uDEB6", taxi: "\uD83D\uDE95", unknown: "\u2753" };
+
   function placeholder(venue) {
     var pal = PALETTES[hashCode(venue.id) % PALETTES.length];
     var box = document.createElement("div");
@@ -200,6 +202,23 @@
       node.querySelector("[data-total]").textContent = totalText(v);
       node.querySelector("[data-perperson]").textContent = perPersonText(v);
       node.querySelector("[data-notes]").textContent = v.notes || "";
+
+      if (v.travel) {
+        var travel = node.querySelector("[data-travel]");
+        travel.hidden = false;
+        travel.classList.add("is-" + (v.travelMode || "unknown"));
+        node.querySelector("[data-travel-icon]").textContent = TRAVEL_ICONS[v.travelMode] || TRAVEL_ICONS.unknown;
+        // Most read as "~8 min walk from brunch", but a couple are already
+        // whole sentences and opt out of the suffix.
+        node.querySelector("[data-travel-text]").textContent =
+          v.travelStandalone ? v.travel : v.travel + " from brunch";
+      }
+
+      if (v.flag) {
+        var flag = node.querySelector("[data-flag]");
+        flag.hidden = false;
+        flag.textContent = "🚩 " + v.flag;
+      }
 
       if (v.confirmParty) node.querySelector("[data-warn]").hidden = false;
 
