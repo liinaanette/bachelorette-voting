@@ -66,6 +66,25 @@
     <ol class="tally" id="tally"></ol>
   </section>
 
+  <section class="ideas" id="ideas">
+    <h2 class="ideas__title">Ideas &amp; notes</h2>
+    <p class="ideas__note">Anything that isn't a venue — what we paint, snacks, drinks, timings, another place worth a look.</p>
+
+    <form class="ideas__form" id="noteForm" autocomplete="off">
+      <textarea class="ideas__input" id="noteInput" rows="2" maxlength="280"
+                placeholder="e.g. can we paint the sea? or: someone bring a speaker"
+                aria-label="Your idea"></textarea>
+      <div class="ideas__row">
+        <span class="ideas__count" id="noteCount">280 left</span>
+        <button class="btn btn--primary btn--small" type="submit" id="noteSubmit">Add</button>
+      </div>
+    </form>
+    <p class="ideas__locked" id="noteLocked" hidden>Add your name above first, then you can post ideas.</p>
+    <p class="namebar__error" id="noteError" role="alert" hidden></p>
+
+    <ul class="notes" id="notes"></ul>
+  </section>
+
   <section class="asks">
     <h2 class="asks__title">Worth asking before we book</h2>
     <ul class="asks__list">

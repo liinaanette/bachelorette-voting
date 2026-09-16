@@ -31,12 +31,14 @@
     name: null,
     votes: new Map(), // voter name -> array of venue ids
     sort: "default",
+    notes: [],
     mode: configured && libLoaded ? "cloud" : "local",
     error: configured && !libLoaded
       ? "Couldn't load the voting library, so your picks are only saved on this phone for now. Try again on a different connection."
       : null
   };
 
+  var MAX_NOTE = 280;
   var supa = null;
   var cards = new Map();
   var openRows = new Set();
@@ -59,6 +61,13 @@
     dock: document.getElementById("dock"),
     dockCount: document.getElementById("dockCount"),
     dockJump: document.getElementById("dockJump"),
+    noteForm: document.getElementById("noteForm"),
+    noteInput: document.getElementById("noteInput"),
+    noteCount: document.getElementById("noteCount"),
+    noteSubmit: document.getElementById("noteSubmit"),
+    noteLocked: document.getElementById("noteLocked"),
+    noteError: document.getElementById("noteError"),
+    notes: document.getElementById("notes"),
     tpl: document.getElementById("venueCard")
   };
 
@@ -498,6 +507,7 @@
     renderChrome();
     renderCards();
     renderTally();
+    renderNotes();
   }
 
   /* ---------- voting ---------- */
@@ -577,6 +587,129 @@
       });
   }
 
+  /* ---------- ideas wall ---------- */
+
+  var KEY_LOCAL_NOTES = "bv.localNotes";
+
+  function timeAgo(iso) {
+    var then = new Date(iso).getTime();
+    if (!then) return "";
+    var mins = Math.floor((Date.now() - then) / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return mins + " min ago";
+    var hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + " h ago";
+    var days = Math.floor(hrs / 24);
+    return days === 1 ? "yesterday" : days + " days ago";
+  }
+
+  function renderNotes() {
+    var named = !!state.name;
+    el.noteInput.disabled = !named;
+    el.noteSubmit.disabled = !named;
+    el.noteLocked.hidden = named;
+
+    el.notes.textContent = "";
+    if (!state.notes.length) {
+      var empty = document.createElement("li");
+      empty.className = "notes__empty";
+      empty.textContent = "Nothing yet — first idea goes here.";
+      el.notes.appendChild(empty);
+      return;
+    }
+
+    state.notes.forEach(function (n) {
+      var li = document.createElement("li");
+      li.className = "note";
+
+      var head = document.createElement("div");
+      head.className = "note__head";
+
+      var who = document.createElement("span");
+      who.className = "note__who";
+      who.textContent = n.author;
+
+      var when = document.createElement("span");
+      when.className = "note__when";
+      when.textContent = timeAgo(n.created_at);
+
+      var body = document.createElement("p");
+      body.className = "note__body";
+      body.textContent = n.body;   // textContent, never innerHTML
+
+      head.appendChild(who);
+      head.appendChild(when);
+      li.appendChild(head);
+      li.appendChild(body);
+      el.notes.appendChild(li);
+    });
+  }
+
+  function updateNoteCount() {
+    var left = MAX_NOTE - el.noteInput.value.length;
+    el.noteCount.textContent = left + " left";
+    el.noteCount.classList.toggle("is-low", left <= 30);
+  }
+
+  function saveLocalNotes() {
+    lsSet(KEY_LOCAL_NOTES, JSON.stringify(state.notes));
+  }
+
+  function addNote(body) {
+    var note = { author: state.name, body: body, created_at: new Date().toISOString() };
+    state.notes.unshift(note);   // optimistic: show it straight away
+    renderNotes();
+
+    if (state.mode !== "cloud") { saveLocalNotes(); return; }
+
+    supa.from("notes").insert({ author: note.author, body: note.body })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        loadNotes();
+      })
+      .catch(function (err) {
+        console.error("note failed", err);
+        // take the optimistic note back rather than pretending it saved
+        var at = state.notes.indexOf(note);
+        if (at !== -1) state.notes.splice(at, 1);
+        renderNotes();
+        el.noteError.hidden = false;
+        el.noteError.textContent = "That didn't save — check your connection and try again.";
+        el.noteInput.value = note.body;
+        updateNoteCount();
+      });
+  }
+
+  function loadNotes() {
+    if (state.mode !== "cloud") {
+      var raw = lsGet(KEY_LOCAL_NOTES);
+      if (raw) { try { state.notes = JSON.parse(raw) || []; } catch (e) { state.notes = []; } }
+      renderNotes();
+      return;
+    }
+    return supa.from("notes").select("author, body, created_at")
+      .order("created_at", { ascending: false }).limit(100)
+      .then(function (res) {
+        if (res.error) throw res.error;
+        state.notes = res.data || [];
+        renderNotes();
+      })
+      .catch(function (err) { console.error("notes load failed", err); });
+  }
+
+  el.noteInput.addEventListener("input", updateNoteCount);
+
+  el.noteForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!state.name) return;
+    var body = el.noteInput.value.trim();
+    if (!body) return;
+    el.noteError.hidden = true;
+    el.noteInput.value = "";
+    updateNoteCount();
+    addNote(body);
+  });
+
   /* ---------- wiring ---------- */
 
   el.nameForm.addEventListener("submit", function (e) {
@@ -631,29 +764,42 @@
     render();
 
     loadCloud();
+    loadNotes();
 
-    // Live updates. Realtime has to be switched on for the table (see
+    // Live updates. Realtime has to be switched on for both tables (see
     // README); the poll below covers us if it isn't, or if the socket drops.
-    var pending = null;
-    function refreshSoon() {
-      clearTimeout(pending);
-      pending = setTimeout(loadCloud, 250);
+    var pendingVotes = null, pendingNotes = null;
+    function votesSoon() {
+      clearTimeout(pendingVotes);
+      pendingVotes = setTimeout(loadCloud, 250);
     }
-    supa.channel("votes-live")
-      .on("postgres_changes", { event: "*", schema: "public", table: "votes" }, refreshSoon)
+    function notesSoon() {
+      clearTimeout(pendingNotes);
+      pendingNotes = setTimeout(loadNotes, 250);
+    }
+    supa.channel("board-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "votes" }, votesSoon)
+      .on("postgres_changes", { event: "*", schema: "public", table: "notes" }, notesSoon)
       .subscribe();
 
-    setInterval(function () {
-      if (!document.hidden) loadCloud();
-    }, POLL_MS);
-    document.addEventListener("visibilitychange", function () {
-      if (!document.hidden) loadCloud();
-    });
+    function refreshAll() {
+      if (document.hidden) return;
+      loadCloud();
+      loadNotes();
+    }
+    setInterval(refreshAll, POLL_MS);
+    document.addEventListener("visibilitychange", refreshAll);
+
+    // "5 min ago" goes stale just sitting there
+    setInterval(function () { if (!document.hidden && state.notes.length) renderNotes(); }, 60000);
   } else {
     loadLocal();
     if (state.name && !state.votes.has(state.name)) state.votes.set(state.name, []);
     render();
+    loadNotes();
   }
+
+  updateNoteCount();
 
   if (!state.name) el.nameInput.focus({ preventScroll: true });
 })();

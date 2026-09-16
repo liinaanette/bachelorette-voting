@@ -152,14 +152,21 @@ fine, or send me a public post URL and I'll wire up a proper embed.
 
 ---
 
-## 4. Resetting the votes
+## 4. Resetting the votes (and the ideas wall)
 
 Supabase → **Table Editor** → `votes` → select the rows → delete. Or SQL Editor:
 
 ```sql
 truncate table public.votes;      -- wipes everyone
 delete from public.votes where voter_name = 'Kadri';   -- just one person
+
+truncate table public.notes;      -- clears the ideas wall
+delete from public.notes where id = 12;                -- remove one note
 ```
+
+Note that the anon key deliberately **cannot delete anything** — that's what
+stops a stray tap wiping the results — so tidying up is always done here in the
+dashboard, never from the page.
 
 Everyone's page updates within seconds. Their **name** stays remembered in their
 own browser (that's `localStorage`, you can't clear it from here) — they'll just
@@ -182,7 +189,12 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
   There's no submit button, every tap saves immediately.
 - **No anti-cheating**, deliberately. Anyone could vote as someone else. It's
   eleven friends deciding where to paint.
-- **Privacy.** First names and picks only, sitting in your Supabase project.
+- **Ideas wall.** A shared notes box under the results for everything that
+  isn't a venue: what to paint, snacks, drinks, timings. Same trust model as
+  voting — anyone can post, nobody can delete or edit someone else's note.
+  Notes are capped at 280 characters, enforced both in the page and in the
+  row level security policy.
+- **Privacy.** First names, picks and any notes people write, sitting in your Supabase project.
   Delete the project when you've booked and it's all gone.
 
 ---

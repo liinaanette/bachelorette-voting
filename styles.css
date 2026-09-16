@@ -748,3 +748,123 @@ body {
   object-fit: cover;
   background: var(--blush);
 }
+
+/* ---------- ideas wall ---------- */
+
+.ideas {
+  margin-top: 26px;
+  padding: 20px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  scroll-margin-top: 16px;
+}
+
+.ideas__title {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--plum-deep);
+}
+
+.ideas__note {
+  margin: 4px 0 14px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.ideas__form { display: block; }
+
+.ideas__input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 16px;   /* keeps iOS from zooming on focus */
+  line-height: 1.45;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  resize: vertical;
+  min-height: 62px;
+}
+
+.ideas__input:focus-visible {
+  outline: none;
+  border-color: var(--plum);
+  box-shadow: 0 0 0 3px rgba(140, 63, 104, .15);
+}
+
+.ideas__input:disabled { background: #faf6f5; cursor: not-allowed; }
+
+.ideas__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ideas__count {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.ideas__count.is-low { color: #a12f4c; }
+
+.btn--small { padding: 10px 22px; font-size: 14.5px; }
+
+.ideas__locked {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.notes { list-style: none; margin: 18px 0 0; padding: 0; }
+
+.notes__empty {
+  margin: 0;
+  padding: 14px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.note {
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: #fbf3f6;
+  border-radius: 14px;
+}
+
+.note:last-child { margin-bottom: 0; }
+
+.note__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 3px;
+}
+
+.note__who {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--plum);
+}
+
+.note__when {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.note__body {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;   /* keep the line breaks people type */
+  overflow-wrap: anywhere; /* and never let a long word widen the page */
+}
