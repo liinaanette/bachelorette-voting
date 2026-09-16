@@ -1,7 +1,8 @@
 name: Deploy to GitHub Pages
 
 # Publishes the repo root as-is — there's nothing to build.
-# One-time setup: repo Settings → Pages → Source → "GitHub Actions".
+# The first run turns Pages on itself (see enablement below). If that ever
+# fails, set it by hand: repo Settings → Pages → Source → "GitHub Actions".
 
 on:
   push:
@@ -27,7 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # enablement lets the first run switch Pages on by itself, so nobody
+      # has to visit Settings → Pages before the site can deploy.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
