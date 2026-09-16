@@ -4,7 +4,7 @@ A one-page venue vote for a self-organised paint & sip bachelorette in Tallinn.
 Send the link to the group chat, everyone types their first name and picks their
 three favourites, and the tally updates live for everyone.
 
-No accounts, no app, no build step — it's four static files and a folder of images.
+No accounts, no app, no build step — it's five static files.
 
 ```
 index.html          the page
@@ -97,7 +97,7 @@ reorder freely — the page rebuilds itself from that list.
   link: "https://barefootstudio.ee/stuudio",
   linkLabel: "Website",
   confirmParty: true,             // shows the paint-&-wine warning
-  photos: ["images/barefoot-1.svg", "images/barefoot-2.svg"]
+  photos: []                      // or ["images/barefoot-1.jpg", …]
 }
 ```
 
