@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Barefoot Studio — placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbe0dd"/>
+      <stop offset="1" stop-color="#efb9b3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M 677.3 290.2 Q 677.3 290.2 657.7 321.6 Q 638.1 352.9 603.6 363.3 Q 569.1 373.7 527.2 356.7 Q 485.2 339.8 491.3 293.2 Q 497.4 246.5 531.8 220.2 Q 566.2 193.8 603.2 209.4 Q 640.1 225.0 658.7 257.6 Z" fill="#a4504a" opacity="0.24"/>
+  <path d="M 666.7 458.7 Q 666.7 458.7 646.0 499.7 Q 625.2 540.8 581.7 547.0 Q 538.2 553.1 510.6 524.4 Q 483.0 495.6 467.6 451.3 Q 452.2 406.9 493.4 377.6 Q 534.6 348.4 577.8 365.1 Q 620.9 381.9 643.8 420.3 Z" fill="#ffffff" opacity="0.22"/>
+  <path d="M 656.7 275.5 Q 656.7 275.5 602.8 342.1 Q 548.8 408.7 475.4 431.2 Q 402.0 453.6 330.5 408.8 Q 259.1 363.9 283.2 287.1 Q 307.3 210.3 358.0 168.5 Q 408.7 126.8 471.7 143.4 Q 534.7 160.1 595.7 217.8 Z" fill="#a4504a" opacity="0.35"/>
+  <path d="M 476.3 162.3 Q 476.3 162.3 455.9 225.5 Q 435.5 288.7 371.0 287.4 Q 306.5 286.1 250.2 258.1 Q 193.8 230.2 215.7 172.9 Q 237.5 115.5 273.6 84.0 Q 309.7 52.5 375.0 41.2 Q 440.4 29.9 458.3 96.1 Z" fill="#ffffff" opacity="0.24"/>
+  <path d="M -40 237 Q 267 84 400 237 T 840 313" fill="none" stroke="#a4504a" stroke-width="16" stroke-linecap="round" opacity="0.14"/>
+  <path d="M -40 250 Q 267 117 400 250 T 840 317" fill="none" stroke="#a4504a" stroke-width="13" stroke-linecap="round" opacity="0.14"/>
+  <text x="400" y="346" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-style="italic" fill="#a4504a" opacity="0.30" transform="rotate(18 400 300)">BS</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#a4504a" opacity="0.55">PHOTO COMING SOON</text>
+</svg>

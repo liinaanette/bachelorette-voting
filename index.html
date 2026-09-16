@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where are we painting? 🥂</title>
+<meta name="description" content="Pick your 3 favourite venues for the paint &amp; sip bachelorette in Tallinn.">
+<meta name="theme-color" content="#fdf7f4">
+
+<!-- Link preview, so the card in the group chat looks like something -->
+<meta property="og:title" content="Where are we painting? 🥂">
+<meta property="og:description" content="Pick your top 3 venues for the paint &amp; sip bachelorette in Tallinn.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero__kicker">Tallinn · Saturday · 4–5 hours · 11 of us</p>
+  <h1 class="hero__title">Where are we<br><em>painting?</em></h1>
+  <p class="hero__sub">Paint &amp; sip bachelorette. Have a look, then pick your <strong>three</strong> favourites. You can change your mind later.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- Name gate -->
+  <section class="panel" id="namePanel" hidden>
+    <h2 class="panel__title">First — who are you?</h2>
+    <p class="panel__note">Just your first name, so we can see who voted for what.</p>
+    <form class="namebar" id="nameForm" autocomplete="off">
+      <input class="namebar__input" id="nameInput" type="text" name="name" placeholder="e.g. Liina" maxlength="24"
+             autocomplete="given-name" enterkeyhint="go" required aria-label="Your first name">
+      <button class="btn btn--primary" type="submit">Start voting</button>
+    </form>
+    <p class="namebar__error" id="nameError" role="alert" hidden></p>
+  </section>
+
+  <!-- Who you are, once you've said -->
+  <section class="whoami" id="whoami" hidden>
+    <p>Voting as <strong id="whoamiName"></strong></p>
+    <button class="linkbtn" id="changeName" type="button">Not you?</button>
+  </section>
+
+  <div class="status" id="status" hidden></div>
+
+  <nav class="sortbar" aria-label="Sort venues">
+    <span class="sortbar__label">Sort</span>
+    <div class="sortbar__opts" role="group">
+      <button class="chip chip--sort is-on" type="button" data-sort="default">Suggested</button>
+      <button class="chip chip--sort" type="button" data-sort="price">Cheapest</button>
+      <button class="chip chip--sort" type="button" data-sort="votes">Most votes</button>
+    </div>
+  </nav>
+
+  <section class="venues" id="venues" aria-label="Venues"></section>
+
+  <section class="results" id="results">
+    <h2 class="results__title">Live results</h2>
+    <p class="results__note" id="resultsNote">Tap a row to see who voted.</p>
+    <ol class="tally" id="tally"></ol>
+  </section>
+
+  <footer class="footer">
+    <p><strong>Per person</strong> figures are the 5 h estimate ÷ 10 — the 10 of us split the bride's share too.</p>
+    <p>Prices were checked in September 2026 and are estimates for 5 hours. Confirm everything before booking.</p>
+    <p class="footer__meta" id="modeNote"></p>
+  </footer>
+</main>
+
+<!-- Sticky counter -->
+<div class="dock" id="dock" hidden>
+  <span class="dock__count" id="dockCount">0 of 3 picked</span>
+  <button class="btn btn--ghost" type="button" id="dockJump">See results ↓</button>
+</div>
+
+<template id="venueCard">
+  <article class="card">
+    <div class="card__photos" data-photos></div>
+    <div class="card__body">
+      <div class="card__head">
+        <h3 class="card__name" data-name></h3>
+        <p class="card__area" data-area></p>
+      </div>
+      <p class="card__chips">
+        <span class="chip chip--price" data-price></span>
+        <span class="chip chip--votes" data-votecount></span>
+      </p>
+      <div class="money" data-money>
+        <div class="money__cell">
+          <span class="money__label">Est. total · 5 h</span>
+          <span class="money__value" data-total></span>
+        </div>
+        <div class="money__cell">
+          <span class="money__label">Per person</span>
+          <span class="money__value money__value--accent" data-perperson></span>
+        </div>
+      </div>
+      <p class="card__notes" data-notes></p>
+      <p class="card__warn" data-warn hidden>⚠️ Photo studio — we need to confirm events, paint and wine are allowed.</p>
+      <p class="card__voters" data-voters hidden></p>
+      <div class="card__actions">
+        <a class="linkout" data-link target="_blank" rel="noopener noreferrer"></a>
+        <button class="btn btn--vote" type="button" data-vote></button>
+      </div>
+    </div>
+  </article>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="venues.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

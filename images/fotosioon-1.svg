@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Fotosioon — placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dde6f2"/>
+      <stop offset="1" stop-color="#b6c8e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M 523.2 463.3 Q 523.2 463.3 500.3 534.0 Q 477.4 604.8 406.6 596.7 Q 335.9 588.7 270.2 564.5 Q 204.5 540.3 191.5 457.0 Q 178.5 373.7 252.8 336.6 Q 327.1 299.5 397.4 316.7 Q 467.7 333.9 495.4 398.6 Z" fill="#3f5a8b" opacity="0.22"/>
+  <path d="M 331.5 263.7 Q 331.5 263.7 293.3 341.3 Q 255.1 418.9 165.5 462.7 Q 75.9 506.5 14.6 427.9 Q -46.6 349.4 -50.7 261.7 Q -54.8 174.1 10.2 96.0 Q 75.2 17.9 167.5 60.2 Q 259.8 102.6 295.7 183.2 Z" fill="#ffffff" opacity="0.20"/>
+  <path d="M 577.8 263.8 Q 577.8 263.8 559.6 333.9 Q 541.5 404.0 464.6 425.7 Q 387.8 447.4 351.3 383.2 Q 314.9 319.0 282.5 248.1 Q 250.1 177.3 323.3 148.0 Q 396.6 118.8 458.8 134.0 Q 521.1 149.1 549.4 206.4 Z" fill="#3f5a8b" opacity="0.16"/>
+  <path d="M 493.4 121.5 Q 493.4 121.5 479.0 167.9 Q 464.6 214.3 412.4 234.8 Q 360.2 255.2 333.3 208.7 Q 306.4 162.1 290.9 114.1 Q 275.4 66.0 321.4 43.1 Q 367.5 20.1 416.5 23.9 Q 465.5 27.7 479.5 74.6 Z" fill="#ffffff" opacity="0.30"/>
+  <path d="M -40 313 Q 267 136 400 313 T 840 402" fill="none" stroke="#3f5a8b" stroke-width="15" stroke-linecap="round" opacity="0.14"/>
+  <path d="M -40 168 Q 267 20 400 168 T 840 243" fill="none" stroke="#3f5a8b" stroke-width="11" stroke-linecap="round" opacity="0.14"/>
+  <text x="400" y="346" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-style="italic" fill="#3f5a8b" opacity="0.30" transform="rotate(18 400 300)">FO</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#3f5a8b" opacity="0.55">PHOTO COMING SOON</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Photoroom — placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e6dcf2"/>
+      <stop offset="1" stop-color="#c9b6e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M 351.8 148.5 Q 351.8 148.5 323.5 190.2 Q 295.1 231.9 247.9 251.1 Q 200.7 270.4 163.6 234.0 Q 126.5 197.6 113.9 142.4 Q 101.3 87.2 151.8 60.4 Q 202.3 33.6 247.2 51.1 Q 292.2 68.6 322.0 108.6 Z" fill="#5f4b8b" opacity="0.17"/>
+  <path d="M 491.0 179.1 Q 491.0 179.1 457.3 212.8 Q 423.6 246.5 384.2 267.8 Q 344.8 289.2 297.3 263.1 Q 249.9 236.9 269.5 188.6 Q 289.2 140.3 315.8 99.6 Q 342.5 58.8 397.7 66.9 Q 453.0 74.9 472.0 127.0 Z" fill="#ffffff" opacity="0.35"/>
+  <path d="M 368.0 360.3 Q 368.0 360.3 305.2 430.5 Q 242.4 500.7 163.1 532.4 Q 83.8 564.1 6.9 510.5 Q -70.1 456.8 -55.3 367.4 Q -40.5 278.0 15.3 189.3 Q 71.1 100.7 172.4 140.6 Q 273.8 180.4 320.9 270.3 Z" fill="#5f4b8b" opacity="0.36"/>
+  <path d="M 696.3 439.2 Q 696.3 439.2 661.2 510.0 Q 626.1 580.9 550.5 593.9 Q 474.9 606.9 401.6 567.6 Q 328.2 528.3 313.4 432.1 Q 298.6 335.9 382.6 285.6 Q 466.6 235.3 566.7 241.0 Q 666.7 246.7 681.5 342.9 Z" fill="#ffffff" opacity="0.16"/>
+  <path d="M -40 146 Q 267 -29 400 146 T 840 233" fill="none" stroke="#5f4b8b" stroke-width="10" stroke-linecap="round" opacity="0.14"/>
+  <path d="M -40 151 Q 267 -27 400 151 T 840 240" fill="none" stroke="#5f4b8b" stroke-width="10" stroke-linecap="round" opacity="0.14"/>
+  <text x="400" y="346" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-style="italic" fill="#5f4b8b" opacity="0.30" transform="rotate(18 400 300)">PH</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#5f4b8b" opacity="0.55">PHOTO COMING SOON</text>
+</svg>

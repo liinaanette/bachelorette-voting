@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Saal Stuudio — placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dde6f2"/>
+      <stop offset="1" stop-color="#b6c8e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M 306.8 233.5 Q 306.8 233.5 277.7 285.0 Q 248.6 336.5 196.0 335.9 Q 143.3 335.3 101.6 310.1 Q 59.8 284.9 64.6 235.8 Q 69.4 186.7 105.6 155.9 Q 141.8 125.1 187.2 137.8 Q 232.7 150.6 269.7 192.0 Z" fill="#3f5a8b" opacity="0.28"/>
+  <path d="M 593.5 106.1 Q 593.5 106.1 554.8 176.5 Q 516.2 246.8 442.5 253.5 Q 368.8 260.1 285.7 231.6 Q 202.5 203.1 201.1 105.4 Q 199.7 7.8 281.5 -32.2 Q 363.3 -72.1 445.7 -60.8 Q 528.1 -49.6 560.8 28.3 Z" fill="#ffffff" opacity="0.35"/>
+  <path d="M 371.1 454.4 Q 371.1 454.4 339.8 528.0 Q 308.4 601.7 227.8 624.1 Q 147.1 646.6 82.9 592.0 Q 18.6 537.4 6.8 448.7 Q -5.1 360.0 69.5 304.5 Q 144.1 249.1 234.8 267.4 Q 325.6 285.7 348.3 370.0 Z" fill="#3f5a8b" opacity="0.33"/>
+  <path d="M 540.9 150.7 Q 540.9 150.7 513.2 212.0 Q 485.6 273.2 415.7 304.3 Q 345.7 335.4 302.7 274.0 Q 259.6 212.5 233.1 137.9 Q 206.5 63.4 276.9 18.0 Q 347.2 -27.4 419.9 -4.0 Q 492.7 19.4 516.8 85.0 Z" fill="#ffffff" opacity="0.23"/>
+  <path d="M -40 356 Q 267 189 400 356 T 840 439" fill="none" stroke="#3f5a8b" stroke-width="18" stroke-linecap="round" opacity="0.14"/>
+  <path d="M -40 164 Q 267 -10 400 164 T 840 250" fill="none" stroke="#3f5a8b" stroke-width="17" stroke-linecap="round" opacity="0.14"/>
+  <text x="400" y="346" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-style="italic" fill="#3f5a8b" opacity="0.30" transform="rotate(-14 400 300)">SS</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#3f5a8b" opacity="0.55">PHOTO COMING SOON</text>
+</svg>

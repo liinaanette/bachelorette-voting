@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Jake Farra Studio — placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fae3d4"/>
+      <stop offset="1" stop-color="#f0c1ae"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M 559.0 352.2 Q 559.0 352.2 539.7 453.6 Q 520.4 555.0 411.8 575.0 Q 303.2 595.0 241.6 516.6 Q 180.0 438.2 176.4 350.4 Q 172.8 262.7 241.3 200.4 Q 309.8 138.2 389.8 175.5 Q 469.7 212.9 514.3 282.5 Z" fill="#a65b4a" opacity="0.37"/>
+  <path d="M 367.7 128.1 Q 367.7 128.1 322.1 187.2 Q 276.5 246.3 213.3 257.7 Q 150.1 269.0 82.8 238.8 Q 15.4 208.5 40.9 140.5 Q 66.5 72.4 103.1 6.9 Q 139.7 -58.6 205.1 -20.5 Q 270.4 17.6 319.1 72.9 Z" fill="#ffffff" opacity="0.33"/>
+  <path d="M 624.3 101.6 Q 624.3 101.6 588.9 149.6 Q 553.5 197.5 503.5 201.2 Q 453.4 204.9 397.1 186.1 Q 340.8 167.2 340.1 101.3 Q 339.4 35.3 390.4 -9.3 Q 441.5 -53.9 495.0 -21.0 Q 548.5 12.0 586.4 56.8 Z" fill="#a65b4a" opacity="0.29"/>
+  <path d="M 801.5 477.5 Q 801.5 477.5 746.4 541.9 Q 691.3 606.3 618.8 634.5 Q 546.3 662.7 495.8 604.6 Q 445.3 546.5 429.4 469.8 Q 413.6 393.2 478.1 334.8 Q 542.7 276.5 633.4 292.0 Q 724.1 307.6 762.8 392.5 Z" fill="#ffffff" opacity="0.30"/>
+  <path d="M -40 275 Q 267 210 400 275 T 840 308" fill="none" stroke="#a65b4a" stroke-width="6" stroke-linecap="round" opacity="0.14"/>
+  <path d="M -40 386 Q 267 226 400 386 T 840 465" fill="none" stroke="#a65b4a" stroke-width="14" stroke-linecap="round" opacity="0.14"/>
+  <text x="400" y="346" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-style="italic" fill="#a65b4a" opacity="0.30" transform="rotate(-14 400 300)">JF</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#a65b4a" opacity="0.55">PHOTO COMING SOON</text>
+</svg>
