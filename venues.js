@@ -213,12 +213,12 @@ window.EXTRAS = [
     min: 50,
     max: 80,
     onlySelfRun: true,
-    note: "Just what we put on the table there. Alcohol and anything we eat out is separate — everyone pays their own."
+    note: "Just what we put on the table there. Everyone buys their own alcohol and their own food when we eat out — the bride's is the line below."
   },
   {
-    label: "The bride's brunch at Morel",
-    min: 25,
-    max: 35,
-    note: "Her main plus a drink, split between the ten of us. Morel's mains run 9–22 €."
+    label: "The bride's food and drinks",
+    min: 75,
+    max: 115,
+    note: "Her brunch at Morel (mains run 9–22 €) with two cocktails, plus a bottle of wine and one of sparkling for the studio. Split between the ten of us."
   }
 ];

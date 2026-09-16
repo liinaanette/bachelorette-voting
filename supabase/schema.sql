@@ -127,7 +127,11 @@ drop policy if exists "anon can pledge"        on public.budgets;
 drop policy if exists "anon can change pledge" on public.budgets;
 revoke all on public.budgets from anon;
 
-create or replace function public.set_pledge(p_token text, p_amount numeric)
+create or replace function public.set_pledge(
+  p_token   text,
+  p_amount  numeric,
+  p_default numeric default null
+)
 returns void
 language plpgsql
 security definer
@@ -139,6 +143,14 @@ begin
   end if;
   if p_token is null or length(p_token) not between 8 and 64 then
     raise exception 'bad token';
+  end if;
+
+  -- Going back to the agreed figure means "I haven't changed anything", so
+  -- the row is removed rather than stored. Otherwise the page would report
+  -- someone as having changed theirs when they had changed it back.
+  if p_default is not null and p_amount = p_default then
+    delete from public.budgets where token = p_token;
+    return;
   end if;
 
   insert into public.budgets (token, amount, updated_at)
@@ -155,8 +167,11 @@ create or replace view public.budget_totals as
     coalesce(round(avg(amount), 2), 0)::numeric  as average
   from public.budgets;
 
-revoke all on function public.set_pledge(text, numeric) from public;
-grant execute on function public.set_pledge(text, numeric) to anon;
+-- the old two-argument version, if this file was run before
+drop function if exists public.set_pledge(text, numeric);
+
+revoke all on function public.set_pledge(text, numeric, numeric) from public;
+grant execute on function public.set_pledge(text, numeric, numeric) to anon;
 grant select on public.budget_totals to anon;
 
 notify pgrst, 'reload schema';

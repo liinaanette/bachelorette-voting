@@ -195,6 +195,14 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
 
 ## 5. Details you might get asked about
 
+- **Compact view.** The toggle by the sort chips strips the cards to name,
+  price, votes and the pick button — about 88% shorter — for once you've voted
+  and just want to watch the tally. The choice is remembered per browser.
+- **Weather.** The hero shows the forecast for the date in `EVENT_DATE`
+  (`app.js`), fetched from Open-Meteo in the browser — free, no key. It only
+  forecasts ~16 days ahead, so before that it shows what early October in
+  Tallinn is normally like, and if the request fails it shows nothing at all
+  rather than an error.
 - **Voting rule.** Approval voting — up to 3 picks each, most approvals wins.
   It's better than "pick one" for this: it surfaces the option most people are
   happy with rather than the one a third of the group loves and the rest hate.
@@ -230,8 +238,12 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
   `allIn: true` (LovePaint), which already includes the paint and drinks.
   Counting them there would make the hosted option look worse than it is.
 
-  Alcohol and meals out are not in these figures at all — everyone pays
-  their own.
+  The bride's line covers her brunch, two cocktails there and a bottle each of
+  wine and sparkling for the studio. Everyone else's alcohol and meals out are
+  not in these figures — they pay their own.
+
+  Returning your pledge to the default deletes your row rather than storing it,
+  so "3 of 10 changed theirs" always means three people actually deviated.
 - **Ideas wall.** A shared notes box under the results for everything that
   isn't a venue: what to paint, snacks, drinks, timings. Same trust model as
   voting — anyone can post, nobody can delete or edit someone else's note.

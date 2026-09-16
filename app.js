@@ -16,8 +16,10 @@
   var MAX_PICKS = 3;
   var SPLIT_BETWEEN = 10;   // we cover the bride's share between the 10 of us
   var PLEDGE_DEFAULT = 75;  // what the group agreed each person puts in
+  var EVENT_DATE = "2026-10-03";   // Saturday
   var KEY_NAME = "bv.voterName";
   var KEY_LOCAL_VOTES = "bv.localVotes";
+  var KEY_COMPACT = "bv.compact";
   var POLL_MS = 20000;
 
   var VENUES = window.VENUES || [];
@@ -64,6 +66,8 @@
     dock: document.getElementById("dock"),
     dockCount: document.getElementById("dockCount"),
     dockJump: document.getElementById("dockJump"),
+    weather: document.getElementById("weather"),
+    compactToggle: document.getElementById("compactToggle"),
     extras: document.getElementById("extras"),
     extrasLeft: document.getElementById("extrasLeft"),
     potFigure: document.getElementById("potFigure"),
@@ -449,7 +453,7 @@
         if (worst <= room) {
           card.afford.className = "card__afford is-covered";
           card.afford.textContent = euro(room - worst) + " still spare after " +
-            (v.allIn ? "the bride's brunch" : "paint, snacks and the brunch");
+            (v.allIn ? "the bride's food and drinks" : "paint, snacks and the bride's share");
         } else {
           card.afford.className = "card__afford is-short";
           card.afford.textContent = euro(worst - room) + " over, once the extras are counted";
@@ -652,6 +656,60 @@
       });
   }
 
+  /* ---------- weather ---------- */
+
+  // Open-Meteo: free, no key, and it sends CORS headers, so the page can
+  // ask it directly. It only forecasts about 16 days ahead, so until we get
+  // close this falls back to what early October in Tallinn is normally like.
+  var WMO = {
+    0: ["Clear", "☀️"], 1: ["Mostly clear", "🌤️"], 2: ["Partly cloudy", "⛅"], 3: ["Overcast", "☁️"],
+    45: ["Foggy", "🌫️"], 48: ["Freezing fog", "🌫️"],
+    51: ["Light drizzle", "🌦️"], 53: ["Drizzle", "🌦️"], 55: ["Heavy drizzle", "🌧️"],
+    56: ["Freezing drizzle", "🌧️"], 57: ["Freezing drizzle", "🌧️"],
+    61: ["Light rain", "🌦️"], 63: ["Rain", "🌧️"], 65: ["Heavy rain", "🌧️"],
+    66: ["Freezing rain", "🌧️"], 67: ["Freezing rain", "🌧️"],
+    71: ["Light snow", "🌨️"], 73: ["Snow", "🌨️"], 75: ["Heavy snow", "❄️"], 77: ["Snow grains", "🌨️"],
+    80: ["Showers", "🌦️"], 81: ["Showers", "🌧️"], 82: ["Heavy showers", "⛈️"],
+    85: ["Snow showers", "🌨️"], 86: ["Snow showers", "❄️"],
+    95: ["Thunderstorms", "⛈️"], 96: ["Thunderstorms", "⛈️"], 99: ["Thunderstorms", "⛈️"]
+  };
+
+  function showWeather(text) {
+    el.weather.hidden = false;
+    el.weather.textContent = text;
+  }
+
+  function loadWeather() {
+    if (!window.fetch) return;
+    var url = "https://api.open-meteo.com/v1/forecast" +
+      "?latitude=59.437&longitude=24.7536" +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+      "&timezone=Europe%2FTallinn&forecast_days=16";
+
+    fetch(url).then(function (r) {
+      if (!r.ok) throw new Error("http " + r.status);
+      return r.json();
+    }).then(function (data) {
+      var d = data && data.daily;
+      var i = d && d.time ? d.time.indexOf(EVENT_DATE) : -1;
+      if (i === -1) {
+        // still beyond the forecast window
+        showWeather("🍂 Too far out for a forecast yet — early October in Tallinn is usually 10–12° and often wet.");
+        return;
+      }
+      var code = WMO[d.weather_code[i]] || ["", "🌡️"];
+      var hi = Math.round(d.temperature_2m_max[i]);
+      var lo = Math.round(d.temperature_2m_min[i]);
+      var rain = d.precipitation_probability_max ? d.precipitation_probability_max[i] : null;
+      var bits = [code[1] + " 3 Oct: " + (code[0] || "").toLowerCase(), hi + "° / " + lo + "°"];
+      if (rain !== null && rain !== undefined) bits.push(rain + "% chance of rain");
+      showWeather(bits.join(" · "));
+    }).catch(function (err) {
+      // a nice-to-have: say nothing rather than show an error
+      console.error("weather failed", err);
+    });
+  }
+
   /* ---------- the pot ---------- */
 
   var KEY_PLEDGE_TOKEN = "bv.pledgeToken";
@@ -772,7 +830,7 @@
     }
     // An RPC rather than an upsert: anon has no rights on the budgets table,
     // which is what keeps individual pledges unreadable.
-    supa.rpc("set_pledge", { p_token: pledgeToken(), p_amount: amount })
+    supa.rpc("set_pledge", { p_token: pledgeToken(), p_amount: amount, p_default: PLEDGE_DEFAULT })
       .then(function (res) {
         if (res.error) throw res.error;
         lsSet(KEY_MY_PLEDGE, String(amount));
@@ -970,6 +1028,18 @@
     el.nameInput.focus();
   });
 
+  function setCompact(on) {
+    el.venues.classList.toggle("is-compact", on);
+    el.compactToggle.classList.toggle("is-on", on);
+    el.compactToggle.setAttribute("aria-pressed", on ? "true" : "false");
+    el.compactToggle.textContent = on ? "Full cards" : "Compact";
+    lsSet(KEY_COMPACT, on ? "1" : "");
+  }
+
+  el.compactToggle.addEventListener("click", function () {
+    setCompact(!el.venues.classList.contains("is-compact"));
+  });
+
   el.dockJump.addEventListener("click", function () {
     el.results.scrollIntoView({ behavior: "smooth", block: "start" });
   });
@@ -993,6 +1063,7 @@
   el.pledgeInput.value = myPledge || String(PLEDGE_DEFAULT);
 
   buildCards();
+  setCompact(!!lsGet(KEY_COMPACT));
   renderPot();
 
   if (state.mode === "cloud") {
@@ -1039,6 +1110,8 @@
   }
 
   updateNoteCount();
+
+  loadWeather();
 
   if (!state.name) el.nameInput.focus({ preventScroll: true });
 })();

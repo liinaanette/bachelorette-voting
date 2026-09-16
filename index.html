@@ -21,10 +21,11 @@
 <body>
 
 <header class="hero">
-  <p class="hero__kicker">Tallinn · Saturday · 4–5 hours · 11 of us</p>
+  <p class="hero__kicker">Tallinn · Sat 3 October · 4–5 hours · 11 of us</p>
   <h1 class="hero__title">Where are we<br><em>painting?</em></h1>
   <p class="hero__sub">Paint &amp; sip bachelorette. Have a look, then pick your <strong>three</strong> favourites. You can change your mind later.</p>
   <p class="hero__from">Travel times are from brunch at <strong>Morel</strong>, Toom-Kuninga 21.</p>
+  <p class="weather" id="weather" hidden></p>
 </header>
 
 <main class="wrap">
@@ -49,15 +50,6 @@
 
   <div class="status" id="status" hidden></div>
 
-  <nav class="sortbar" aria-label="Sort venues">
-    <span class="sortbar__label">Sort</span>
-    <div class="sortbar__opts" role="group">
-      <button class="chip chip--sort is-on" type="button" data-sort="default">Suggested</button>
-      <button class="chip chip--sort" type="button" data-sort="price">Cheapest</button>
-      <button class="chip chip--sort" type="button" data-sort="votes">Most votes</button>
-    </div>
-  </nav>
-
   <section class="pot" id="pot">
     <h2 class="pot__title">What we can spend</h2>
     <p class="pot__figure" id="potFigure">—</p>
@@ -78,6 +70,18 @@
     <p class="pot__privacy">Only change this if €75 doesn't work for you — more or less, both fine. Anonymous: only the total is ever shown, never who said what.</p>
     <p class="namebar__error" id="pledgeError" role="alert" hidden></p>
   </section>
+
+  <nav class="sortbar" aria-label="Sort and display venues">
+    <div class="sortbar__top">
+      <span class="sortbar__label">Sort</span>
+      <button class="chip chip--toggle" type="button" id="compactToggle" aria-pressed="false">Compact</button>
+    </div>
+    <div class="sortbar__opts" role="group">
+      <button class="chip chip--sort is-on" type="button" data-sort="default">Suggested</button>
+      <button class="chip chip--sort" type="button" data-sort="price">Cheapest</button>
+      <button class="chip chip--sort" type="button" data-sort="votes">Most votes</button>
+    </div>
+  </nav>
 
   <section class="venues" id="venues" aria-label="Venues"></section>
 

@@ -229,29 +229,15 @@ body {
 
 /* ---------- sort ---------- */
 
-.sortbar {
+.sortbar { margin-bottom: 14px; }
+
+.sortbar__top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
-
-.sortbar__label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.sortbar__opts {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.sortbar__opts::-webkit-scrollbar { display: none; }
 
 .chip {
   display: inline-block;
@@ -280,6 +266,42 @@ body {
   color: #fff;
   font-weight: 600;
 }
+
+.chip--toggle {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  background: #fff;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip--toggle.is-on {
+  background: var(--plum-deep);
+  border-color: var(--plum-deep);
+  color: #fff;
+  font-weight: 600;
+}
+
+.sortbar__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.sortbar__opts {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sortbar__opts::-webkit-scrollbar { display: none; }
 
 .chip--price { background: var(--blush); color: var(--plum-deep); }
 .chip--votes { background: #efe6d4; color: var(--gold); }
@@ -1119,3 +1141,50 @@ body {
 }
 
 .extras__left span { display: block; font-weight: 500; font-size: 12px; color: var(--ink-soft); }
+
+
+/* ---------- compact list ---------- */
+/* Once you've voted, the photos and blurb are just scrolling between you
+   and the tally. This strips each card to what you still need to see. */
+
+.venues.is-compact .card__media,
+.venues.is-compact .money,
+.venues.is-compact .card__notes,
+.venues.is-compact .card__travel,
+.venues.is-compact .card__afford,
+.venues.is-compact .card__warn,
+.venues.is-compact .card__flag,
+.venues.is-compact .linkout { display: none; }
+
+.venues.is-compact { gap: 10px; }
+.venues.is-compact .card__body { padding: 12px 14px; }
+.venues.is-compact .card__head { margin-bottom: 8px; }
+.venues.is-compact .card__name { font-size: 18px; }
+.venues.is-compact .card__area { display: none; }
+.venues.is-compact .card__chips { margin-bottom: 0; }
+
+/* price, votes and the pick button on one line */
+.venues.is-compact .card__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.venues.is-compact .card__head { flex: 1 1 100%; margin-bottom: 4px; }
+.venues.is-compact .card__actions { margin-left: auto; }
+.venues.is-compact .btn--vote { min-width: 0; padding: 9px 16px; font-size: 14px; }
+.venues.is-compact .card__voters { flex: 1 1 100%; margin: 0; }
+
+.weather {
+  display: inline-block;
+  margin: 12px auto 0;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
