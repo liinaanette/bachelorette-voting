@@ -13,7 +13,9 @@ app.js              voting logic
 venues.js      ←    the only file you edit to change venues
 config.js      ←    your Supabase keys go here
 images/             one folder per venue, for photos
+images/README.md    which folder belongs to which venue
 supabase/schema.sql the one-time database setup
+scripts/            regenerates the image folders
 ```
 
 ---
@@ -28,7 +30,8 @@ only sees their own votes. You'll see a note on the page saying so.
    or two to spin up.
 2. In the project, open **SQL Editor** → **New query**. Paste in everything from
    [`supabase/schema.sql`](supabase/schema.sql) and hit **Run**. That creates the
-   `votes` table, opens it up for anonymous voting, and switches on live updates.
+   `votes` and `notes` tables, opens them for anonymous use, and switches on
+   live updates.
 3. Go to **Project Settings** → **API** (in newer dashboards: **API Keys**) and copy:
    - the **Project URL** — looks like `https://abcdefghijklm.supabase.co`
    - the **anon / public** key — a long string starting `eyJ…`
@@ -95,20 +98,24 @@ reorder freely — the page rebuilds itself from that list.
 
 ```js
 {
-  id: "barefoot",                 // never change this once people have voted!
-  name: "Barefoot Studio",
-  area: "Pärnu mnt 142",
-  price: "35 € 1st h, then 30 €/h",
-  estMin: 155,                    // 5 h estimate, €
-  estMax: 155,                    // a bigger number here shows a range
+  id: "loow",                     // never change this once people have voted!
+  name: "LOOW Stuudio",
+  area: "Tatari 64, city centre",
+  price: "25 €/h weekends (min 3 h)",
+  estMin: 125,                    // 5 h estimate, €
+  estMax: 150,                    // a bigger number here shows a range
   quoteOnly: false,               // true = "ask for a quote", hides the numbers
-  notes: "Scandinavian loft…",
-  link: "https://barefootstudio.ee/stuudio",
+  notes: "Cosy Scandinavian room…",
+  travel: "~10 min walk",         // from brunch at Morel, Toom-Kuninga 21
+  travelMode: "walk",             // walk | taxi | unknown — picks the icon
+  link: "https://loow.ee",
   linkLabel: "Website",
-  confirmParty: true,             // shows the paint-&-wine warning
-  photos: []                      // or ["images/barefoot/1.jpg", …]
+  photos: ["images/loow/1.jpg", "images/loow/2.jpg"]
 }
 ```
+
+Optional extras: `estLabel` replaces "Est. total · 5 h" (LovePaint uses
+"All in · 3–3.5 h"), `tag` adds a chip, and `flag` shows a red warning.
 
 Two things worth knowing:
 
@@ -120,22 +127,21 @@ Two things worth knowing:
 
 ### Adding photos
 
-**Stuudio323 has photos; the other nine don't yet.** The venue websites
-weren't reachable from the environment this was built in, so nothing was
-scraped — every venue without photos draws a generated placeholder (a coloured
-panel with its initials). Those look deliberate rather than broken, so the page
-is fine to share as-is, but real photos sell the venues far better.
+All eight venues have photos. A venue left on `photos: []` falls back to a
+generated placeholder — a coloured panel with its initials — which looks
+deliberate rather than broken, so you can add a venue now and photograph it
+later.
 
-To add them:
+To add or replace photos:
 
-1. Save 1–3 photos per venue — from the venue's own site, their Instagram, or
-   screenshots. Aim for roughly 1200 px wide and under ~200 KB each;
+1. Aim for roughly 1200 px wide and under ~200 KB each;
    [squoosh.app](https://squoosh.app) does the compressing in the browser.
-2. Each venue has its own folder under `images/` already — drop the files in
-   the matching one, then list them on that venue:
+   Oversized files are the main thing that makes this page slow on mobile data.
+2. Each venue has its own folder under `images/` — drop the files in the
+   matching one, then list them on that venue:
 
    ```js
-   photos: ["images/barefoot/1.jpg", "images/barefoot/2.jpg"]
+   photos: ["images/loow/1.jpg", "images/loow/2.jpg"]
    ```
 
    [`images/README.md`](images/README.md) maps every folder to its venue and
@@ -145,10 +151,14 @@ To add them:
 3. Commit and push. Any venue still on `photos: []` keeps its placeholder, so
    you can do this a few venues at a time.
 
-Cards show the first photo large; extra ones become a swipe-through gallery.
+Cards show the first photo large; extra ones become a swipe-through gallery
+with dots underneath.
 
-For the Instagram-only venue (Stuudio323) a screenshot of their grid works
-fine, or send me a public post URL and I'll wire up a proper embed.
+**Video works too.** List an `.mp4` and put a `.jpg` of the same name beside it
+as the poster frame (`images/lovepaint/1.mp4` + `1.jpg`). Clips play muted and
+looping with no controls, and only download once scrolled into view. Keep them
+short and under ~1.5 MB; phones pay for every byte. Use H.264 — it's the codec
+every phone decodes.
 
 ---
 
