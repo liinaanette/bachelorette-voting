@@ -14,7 +14,8 @@
   "use strict";
 
   var MAX_PICKS = 3;
-  var SPLIT_BETWEEN = 10; // we cover the bride's share between the 10 of us
+  var SPLIT_BETWEEN = 10;   // we cover the bride's share between the 10 of us
+  var PLEDGE_DEFAULT = 75;  // what the group agreed each person puts in
   var KEY_NAME = "bv.voterName";
   var KEY_LOCAL_VOTES = "bv.localVotes";
   var POLL_MS = 20000;
@@ -436,18 +437,21 @@
         card.voters.hidden = true;
       }
 
-      var pot = potProjected();
-      if (pot !== null && !v.quoteOnly && typeof v.estMin === "number") {
+      var pot = potTotal();
+      if (!v.quoteOnly && typeof v.estMin === "number") {
         var worst = v.estMax || v.estMin;
-        var everyone = state.pot.people >= SPLIT_BETWEEN;
         card.afford.hidden = false;
         if (worst <= pot) {
+          // The room is only part of the cost — what's left has to cover
+          // paint, canvases, snacks and wine, so show that rather than a
+          // green tick that says the same thing on every card.
           card.afford.className = "card__afford is-covered";
-          card.afford.textContent = everyone ? "Covered by the pot" : "Covered, at the current average";
+          card.afford.textContent = v.allIn
+            ? euro(pot - worst) + " spare — paint and drinks already included"
+            : euro(pot - worst) + " left for paint, food and drinks";
         } else {
           card.afford.className = "card__afford is-short";
-          card.afford.textContent = euro(worst - pot) +
-            (everyone ? " more than the pot" : " over what we're on track for");
+          card.afford.textContent = euro(worst - pot) + " more than the pot";
         }
       } else {
         card.afford.hidden = true;
@@ -665,28 +669,36 @@
     return t;
   }
 
-  // What the pot would come to if everyone still to answer chips in at the
-  // current average. Judging venues against a part-filled pot would mark
-  // everything unaffordable just because seven people haven't replied.
-  function potProjected() {
-    var p = state.pot;
-    if (!p || !p.people) return null;
-    return p.people >= SPLIT_BETWEEN ? p.total : p.average * SPLIT_BETWEEN;
+  // Everyone counts as the agreed PLEDGE_DEFAULT until they say otherwise,
+  // so the total means something from the start and only moves when someone
+  // actually deviates. Without that, the pot would look empty and every
+  // venue unaffordable simply because people hadn't got round to answering.
+  function answeredCount() {
+    return state.pot ? state.pot.people : 0;
+  }
+
+  function potTotal() {
+    var answered = answeredCount();
+    var pledged = state.pot ? state.pot.total : 0;
+    var assumed = Math.max(0, SPLIT_BETWEEN - answered) * PLEDGE_DEFAULT;
+    return pledged + assumed;
   }
 
   function renderPot() {
-    if (!state.pot || !state.pot.people) {
-      el.potFigure.textContent = "—";
-      el.potDetail.textContent = "Nobody has said yet. Put the first number in.";
-      return;
+    var answered = answeredCount();
+    el.potFigure.textContent = euro(potTotal());
+
+    if (answered === 0) {
+      el.potDetail.textContent =
+        "The agreed " + euro(PLEDGE_DEFAULT) + " each. Change yours below if it doesn't work.";
+    } else if (answered >= SPLIT_BETWEEN) {
+      el.potDetail.textContent =
+        "All " + SPLIT_BETWEEN + " have set their own · " + euro(state.pot.average) + " each on average";
+    } else {
+      el.potDetail.textContent =
+        answered + " of " + SPLIT_BETWEEN + " changed theirs · the other " +
+        (SPLIT_BETWEEN - answered) + " counted at " + euro(PLEDGE_DEFAULT);
     }
-    var p = state.pot;
-    var everyone = p.people >= SPLIT_BETWEEN;
-    el.potFigure.textContent = euro(p.total);
-    el.potDetail.textContent = everyone
-      ? "All " + SPLIT_BETWEEN + " have answered · " + euro(p.average) + " each on average"
-      : p.people + " of " + SPLIT_BETWEEN + " have answered · " + euro(p.average) +
-        " each so far, which would make " + euro(potProjected()) + " if the rest match";
   }
 
   function loadPot() {
@@ -930,7 +942,7 @@
   if (saved.length >= 2) state.name = saved;
 
   var myPledge = lsGet(KEY_MY_PLEDGE);
-  if (myPledge) el.pledgeInput.value = myPledge;
+  el.pledgeInput.value = myPledge || String(PLEDGE_DEFAULT);
 
   buildCards();
   renderPot();

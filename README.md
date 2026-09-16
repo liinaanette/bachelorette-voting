@@ -217,9 +217,14 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
   UPDATE` needs SELECT privilege on the conflict column, which is precisely
   the privilege being withheld. Hence the function.)
 
-  While fewer than 10 have answered, venues are judged against the *projected*
-  pot (the current average × 10) rather than the part-filled one — otherwise
-  everything looks unaffordable simply because people haven't replied yet.
+  Everyone counts at the agreed **€75** until they change it, so the total is
+  meaningful from the start and only moves when someone actually deviates.
+  Change the figure with `PLEDGE_DEFAULT` at the top of `app.js`.
+
+  Cards show what would be **left over** after the room rather than a bare
+  "affordable" — the venue is only part of the cost. A venue marked
+  `allIn: true` (LovePaint) says "spare" instead, since its price already
+  covers materials and drinks.
 - **Ideas wall.** A shared notes box under the results for everything that
   isn't a venue: what to paint, snacks, drinks, timings. Same trust model as
   voting — anyone can post, nobody can delete or edit someone else's note.

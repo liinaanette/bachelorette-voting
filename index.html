@@ -61,18 +61,18 @@
   <section class="pot" id="pot">
     <h2 class="pot__title">What we can spend</h2>
     <p class="pot__figure" id="potFigure">—</p>
-    <p class="pot__detail" id="potDetail">Nobody has said yet.</p>
+    <p class="pot__detail" id="potDetail">Loading…</p>
 
     <form class="pot__form" id="pledgeForm" autocomplete="off" novalidate>
-      <label class="pot__label" for="pledgeInput">I can put in</label>
+      <label class="pot__label" for="pledgeInput">We said €75 each — I can do</label>
       <span class="pot__field">
         <span class="pot__euro">€</span>
         <input class="pot__input" id="pledgeInput" type="number" inputmode="decimal"
-               min="0" max="1000" step="5" placeholder="0" aria-label="What you can put in, in euros">
+               min="0" max="1000" step="5" placeholder="75" aria-label="What you can put in, in euros">
       </span>
       <button class="btn btn--primary btn--small" type="submit" id="pledgeSubmit">Save</button>
     </form>
-    <p class="pot__privacy">Anonymous — only the total is shown, never who said what. Change it whenever; the total follows.</p>
+    <p class="pot__privacy">Only change this if €75 doesn't work for you — more or less, both fine. Anonymous: only the total is ever shown, never who said what.</p>
     <p class="namebar__error" id="pledgeError" role="alert" hidden></p>
   </section>
 

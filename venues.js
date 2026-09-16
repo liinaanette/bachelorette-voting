@@ -21,6 +21,7 @@
      flag:      "Something is wrong with this one",   // optional red warning
      estLabel:  "All in · 3–3.5 h",  // optional, default is "Est. total · 5 h"
      tag:       "Hosted — no organising",  // optional extra chip
+     allIn:     true,                // price already covers paint and drinks
      photos:    ["images/foo/1.jpg"] // stills, or an .mp4 clip (needs a
                                      // matching .jpg poster beside it);
                                      // leave [] for a placeholder
@@ -177,6 +178,7 @@ window.VENUES = [
     estMax: 560,
     estLabel: "All in · 3–3.5 h",
     tag: "Hosted — no organising",
+    allIn: true,          // price already covers materials and drinks
     notes: "Not a room we rent: a hosted art party with an artist guiding everyone. The 560 € covers the artist, all materials and the drinks — a bottle of wine per two people, plus alcohol-free fizz — so it isn't really comparable to a bare room, where paint, canvases and wine are all still to buy. Shorter at 3–3.5 h, and still much the priciest, but nobody plans, shops or cleans up. Snacks 30 € extra. There's also a bachelorette package from 490 € for 8, with decorations, a photo zone, a Bride Team programme and 10 Polaroids. Minimum 8 on Fri/Sat, so 11 is fine.",
     travel: "~10 min walk",
     travelMode: "walk",
