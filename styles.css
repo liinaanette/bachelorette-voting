@@ -307,8 +307,9 @@ body {
   box-shadow: 0 0 0 1.5px var(--plum), var(--shadow);
 }
 
+.card__media { position: relative; }
+
 .card__photos {
-  position: relative;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -720,7 +721,9 @@ body {
   display: flex;
   justify-content: center;
   gap: 6px;
+  padding: 6px 0;
   pointer-events: none;
+  background: linear-gradient(to top, rgba(46, 31, 41, .28), transparent);
 }
 
 .dots__dot {
@@ -777,15 +780,72 @@ body {
   transition: opacity .25s ease;
 }
 
-.videoslide__play svg {
-  width: 34px;
-  height: 34px;
-  fill: var(--plum-deep);
-  background: rgba(255, 255, 255, .92);
-  border-radius: 50%;
-  padding: 13px;
-  box-shadow: 0 3px 12px rgba(46, 31, 41, .3);
+.videoslide__play {
+  flex-direction: column;
+  gap: 10px;
 }
+
+.videoslide__disc {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 3px 14px rgba(46, 31, 41, .35);
+}
+
+.videoslide__disc svg {
+  width: 26px;
+  height: 26px;
+  margin-left: 4px;     /* optical centring — a triangle looks left-heavy */
+  fill: var(--plum-deep);
+}
+
+/* a slow halo, so it reads as "this does something" rather than as a watermark */
+.videoslide__disc::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .85);
+  animation: videopulse 2.4s ease-out infinite;
+}
+
+@keyframes videopulse {
+  0%   { transform: scale(1);    opacity: .9; }
+  70%  { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.videoslide__hint {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(46, 31, 41, .8);
+}
+
+/* corner label, so it's a clip even before you notice the button */
+.videoslide__flag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(46, 31, 41, .62);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.videoslide.is-playing .videoslide__flag { opacity: 0; }
 
 .videoslide.is-playing .videoslide__play {
   opacity: 0;

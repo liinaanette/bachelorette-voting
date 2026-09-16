@@ -224,13 +224,21 @@
     vid.poster = src.replace(/\.mp4$/i, ".jpg");
     vid.setAttribute("aria-label", venue.name + " — short clip");
 
+    var flag = document.createElement("span");
+    flag.className = "videoslide__flag";
+    flag.textContent = "▶ Video";
+
     var badge = document.createElement("button");
     badge.className = "videoslide__play";
     badge.type = "button";
     badge.setAttribute("aria-label", "Play clip");
-    badge.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    badge.innerHTML =
+      '<span class="videoslide__disc"><svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path d="M8 5v14l11-7z"/></svg></span>' +
+      '<span class="videoslide__hint">Tap to play</span>';
 
     wrap.appendChild(vid);
+    wrap.appendChild(flag);
     wrap.appendChild(badge);
 
     var loaded = false;
@@ -277,7 +285,7 @@
       dots.push(d);
       wrap.appendChild(d);
     }
-    card.querySelector(".card__photos").appendChild(wrap);
+    card.querySelector(".card__media").appendChild(wrap);
 
     var ticking = false;
     strip.addEventListener("scroll", function () {
