@@ -221,10 +221,17 @@ their browser's "clear site data", or by tapping "Not you?" and using a new name
   meaningful from the start and only moves when someone actually deviates.
   Change the figure with `PLEDGE_DEFAULT` at the top of `app.js`.
 
-  Cards show what would be **left over** after the room rather than a bare
-  "affordable" — the venue is only part of the cost. A venue marked
-  `allIn: true` (LovePaint) says "spare" instead, since its price already
-  covers materials and drinks.
+  `EXTRAS` in `venues.js` lists everything that isn't the room — paint and
+  canvases, snacks and soft drinks at the studio, and the bride's brunch —
+  and the page subtracts them before judging a venue, so cards show what is
+  genuinely left rather than what the room alone costs.
+
+  An extra marked `onlySelfRun: true` is skipped for a venue marked
+  `allIn: true` (LovePaint), which already includes the paint and drinks.
+  Counting them there would make the hosted option look worse than it is.
+
+  Alcohol and meals out are not in these figures at all — everyone pays
+  their own.
 - **Ideas wall.** A shared notes box under the results for everything that
   isn't a venue: what to paint, snacks, drinks, timings. Same trust model as
   voting — anyone can post, nobody can delete or edit someone else's note.

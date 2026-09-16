@@ -189,3 +189,36 @@ window.VENUES = [
     ]
   }
 ];
+
+/* ------------------------------------------------------------------
+   THE REST OF THE BUDGET — everything that isn't the room.
+
+   These come out of the same pot, so the page subtracts them before
+   working out what a venue really leaves us. Rough ranges; edit freely.
+
+   onlySelfRun: true means it doesn't apply to a hosted venue (one marked
+   allIn), because there the paint and drinks are already in the price.
+------------------------------------------------------------------ */
+
+window.EXTRAS = [
+  {
+    label: "Paint, canvases and brushes",
+    min: 100,
+    max: 170,
+    onlySelfRun: true,
+    note: "Canvas boards are about 29 € for ten, so 11 of us need a pack and a bit. The rest is acrylics, brushes, palettes and something to cover the floor."
+  },
+  {
+    label: "Snacks and soft drinks at the studio",
+    min: 50,
+    max: 80,
+    onlySelfRun: true,
+    note: "Just what we put on the table there. Alcohol and anything we eat out is separate — everyone pays their own."
+  },
+  {
+    label: "The bride's brunch at Morel",
+    min: 25,
+    max: 35,
+    note: "Her main plus a drink, split between the ten of us. Morel's mains run 9–22 €."
+  }
+];

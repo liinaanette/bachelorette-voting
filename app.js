@@ -21,6 +21,7 @@
   var POLL_MS = 20000;
 
   var VENUES = window.VENUES || [];
+  var EXTRAS = window.EXTRAS || [];
   var cfg = window.SUPABASE_CONFIG || {};
 
   // Cloud mode needs both the config and the Supabase library — if the CDN
@@ -63,6 +64,8 @@
     dock: document.getElementById("dock"),
     dockCount: document.getElementById("dockCount"),
     dockJump: document.getElementById("dockJump"),
+    extras: document.getElementById("extras"),
+    extrasLeft: document.getElementById("extrasLeft"),
     potFigure: document.getElementById("potFigure"),
     potDetail: document.getElementById("potDetail"),
     pledgeForm: document.getElementById("pledgeForm"),
@@ -437,21 +440,19 @@
         card.voters.hidden = true;
       }
 
-      var pot = potTotal();
       if (!v.quoteOnly && typeof v.estMin === "number") {
+        // worst case throughout: the top of the venue's range against the top
+        // of the extras. Better to be pleasantly surprised than caught short.
+        var room = potTotal() - extrasFor(v).max;
         var worst = v.estMax || v.estMin;
         card.afford.hidden = false;
-        if (worst <= pot) {
-          // The room is only part of the cost — what's left has to cover
-          // paint, canvases, snacks and wine, so show that rather than a
-          // green tick that says the same thing on every card.
+        if (worst <= room) {
           card.afford.className = "card__afford is-covered";
-          card.afford.textContent = v.allIn
-            ? euro(pot - worst) + " spare — paint and drinks already included"
-            : euro(pot - worst) + " left for paint, food and drinks";
+          card.afford.textContent = euro(room - worst) + " still spare after " +
+            (v.allIn ? "the bride's brunch" : "paint, snacks and the brunch");
         } else {
           card.afford.className = "card__afford is-short";
-          card.afford.textContent = euro(worst - pot) + " more than the pot";
+          card.afford.textContent = euro(worst - room) + " over, once the extras are counted";
         }
       } else {
         card.afford.hidden = true;
@@ -684,6 +685,52 @@
     return pledged + assumed;
   }
 
+  // A hosted venue already includes the paint and the drinks, so those lines
+  // don't apply to it. Counting them anyway would make the expensive option
+  // look worse than it is, which is the opposite of useful.
+  function extrasFor(venue) {
+    var min = 0, max = 0;
+    EXTRAS.forEach(function (x) {
+      if (x.onlySelfRun && venue && venue.allIn) return;
+      min += x.min;
+      max += x.max;
+    });
+    return { min: min, max: max };
+  }
+
+  function renderExtras() {
+    el.extras.textContent = "";
+    EXTRAS.forEach(function (x) {
+      var li = document.createElement("li");
+      li.className = "extra";
+
+      var label = document.createElement("span");
+      label.className = "extra__label";
+      label.textContent = x.label;
+      if (x.note) {
+        var note = document.createElement("span");
+        note.className = "extra__note";
+        note.textContent = x.note;
+        label.appendChild(note);
+      }
+
+      var cost = document.createElement("span");
+      cost.className = "extra__cost";
+      cost.textContent = x.min === x.max ? euro(x.min) : euro(x.min) + "–" + euro(x.max);
+
+      li.appendChild(label);
+      li.appendChild(cost);
+      el.extras.appendChild(li);
+    });
+
+    var e = extrasFor(null);
+    var pot = potTotal();
+    el.extrasLeft.textContent = "Leaves " + euro(pot - e.max) + "–" + euro(pot - e.min) + " for the room";
+    var hint = document.createElement("span");
+    hint.textContent = "A hosted venue includes the paint and drinks, so it only carries the brunch.";
+    el.extrasLeft.appendChild(hint);
+  }
+
   function renderPot() {
     var answered = answeredCount();
     el.potFigure.textContent = euro(potTotal());
@@ -699,6 +746,7 @@
         answered + " of " + SPLIT_BETWEEN + " changed theirs · the other " +
         (SPLIT_BETWEEN - answered) + " counted at " + euro(PLEDGE_DEFAULT);
     }
+    renderExtras();
   }
 
   function loadPot() {
