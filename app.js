@@ -183,6 +183,31 @@
     return box;
   }
 
+  function addDots(card, strip, count) {
+    var wrap = document.createElement("div");
+    wrap.className = "dots";
+    wrap.setAttribute("aria-hidden", "true"); // decorative; the images carry the alt text
+    var dots = [];
+    for (var i = 0; i < count; i++) {
+      var d = document.createElement("span");
+      d.className = "dots__dot" + (i === 0 ? " is-on" : "");
+      dots.push(d);
+      wrap.appendChild(d);
+    }
+    card.querySelector(".card__photos").appendChild(wrap);
+
+    var ticking = false;
+    strip.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        var at = Math.round(strip.scrollLeft / strip.clientWidth);
+        dots.forEach(function (d, i) { d.classList.toggle("is-on", i === at); });
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
   /* ---------- rendering ---------- */
 
   function buildCards() {
@@ -203,6 +228,8 @@
           img.decoding = "async";
           photos.appendChild(img);
         });
+        // nothing else signals that the strip scrolls, so show dots
+        if (v.photos.length > 1) addDots(node, photos, v.photos.length);
       } else {
         photos.appendChild(placeholder(v));
       }

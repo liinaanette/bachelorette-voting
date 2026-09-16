@@ -308,6 +308,7 @@ body {
 }
 
 .card__photos {
+  position: relative;
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -320,7 +321,7 @@ body {
 .photo {
   flex: 0 0 100%;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   scroll-snap-align: start;
   display: block;
@@ -331,7 +332,7 @@ body {
   position: relative;
   flex: 0 0 100%;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -707,3 +708,31 @@ body {
 .asks__list li { margin-bottom: 7px; }
 .asks__list li:last-child { margin-bottom: 0; }
 .asks__list strong { color: var(--ink); }
+
+
+/* ---------- photo swipe dots ---------- */
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.dots__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .55);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.dots__dot.is-on {
+  background: #fff;
+  transform: scale(1.35);
+}

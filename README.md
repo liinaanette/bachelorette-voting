@@ -81,17 +81,10 @@ under **Site configuration** → **Change site name**.
 
 ### GitHub Pages
 
-`.github/workflows/pages.yml` is committed and ready, but Pages has to be
-switched on by hand first — the workflow token isn't allowed to do it
-(`Create Pages site failed: Resource not accessible by integration`).
-
-1. Repo → **Settings** → **Pages** → **Build and deployment** → set
-   **Source** to **GitHub Actions**.
-2. Push anything, or re-run the workflow from the **Actions** tab.
-3. Lands at **https://liinaanette.github.io/bachelorette-voting/**
-
-That URL can't be changed without renaming the repo, which is worth thinking
-about if the bride is in the chat you're sending it to.
+Not used. There was a workflow for it, but Pages can't be enabled by the
+workflow token, so every push emailed a failure notice — it's been removed.
+If you ever want it back, add a workflow using `actions/deploy-pages` and turn
+Pages on by hand at Settings → Pages → Source → GitHub Actions.
 
 ---
 
@@ -127,11 +120,11 @@ Two things worth knowing:
 
 ### Adding photos
 
-**There are no photos yet.** The venue websites weren't reachable from the
-environment this was built in, so nothing was scraped — every card currently
-draws a generated placeholder (a coloured panel with the venue's initials).
-They look deliberate rather than broken, so the page is fine to share as-is,
-but real photos will obviously sell the venues better.
+**Stuudio323 has photos; the other nine don't yet.** The venue websites
+weren't reachable from the environment this was built in, so nothing was
+scraped — every venue without photos draws a generated placeholder (a coloured
+panel with its initials). Those look deliberate rather than broken, so the page
+is fine to share as-is, but real photos sell the venues far better.
 
 To add them:
 

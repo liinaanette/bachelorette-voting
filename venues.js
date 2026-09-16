@@ -37,18 +37,22 @@ window.VENUES = [
   {
     id: "stuudio323",
     name: "Stuudio323",
-    area: "Address not published — ask them",
+    area: "Tatari 64, 3rd floor",
     price: "35 €/h weekends",
     estMin: 175,
     estMax: 175,
-    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. Instagram-only: no website, no public address, no online calendar — someone has to DM them and wait for a reply, so start this one early if it interests you.",
-    travel: "Unknown — no public address",
-    travelMode: "unknown",
-    travelStandalone: true,
+    notes: "Fits 8–20, so 11 sits comfortably in the middle rather than at the limit. Second-cheapest option and walkable from brunch. Instagram-only — no website or online calendar, so someone has to DM them and wait for a reply. It's on the 3rd floor, so worth asking about a lift.",
+    travel: "~10 min walk",
+    travelMode: "walk",
     link: "https://www.instagram.com/stuudio323/",
     linkLabel: "Instagram",
     confirmParty: true,
-    photos: []
+    photos: [
+      "images/stuudio323/1.jpg",
+      "images/stuudio323/2.jpg",
+      "images/stuudio323/3.jpg",
+      "images/stuudio323/4.jpg"
+    ]
   },
   {
     id: "jakefarra",
