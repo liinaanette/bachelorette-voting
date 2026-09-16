@@ -15,8 +15,11 @@
      link:      "https://…",
      linkLabel: "Website",
      confirmParty: true,             // shows the "confirm paint & wine" warning
-     photos:    ["images/foo-1.svg"] // 1–3 images, first one is the big one
+     photos:    ["images/foo-1.jpg"] // 1–3 images; leave [] for a placeholder
    }
+
+   No photos yet — every venue draws a generated placeholder until you drop
+   real images into /images and list them. See README.md.
 
    Prices checked Sept 2026 — verify before booking.
    Per-person figures are calculated automatically: total ÷ 10.
@@ -34,7 +37,7 @@ window.VENUES = [
     link: "https://www.instagram.com/stuudio323/",
     linkLabel: "Instagram",
     confirmParty: true,
-    photos: ["images/stuudio323-1.svg", "images/stuudio323-2.svg"]
+    photos: []
   },
   {
     id: "jakefarra",
@@ -47,7 +50,7 @@ window.VENUES = [
     link: "https://jakefarra.com/fotostuudio-rent",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/jakefarra-1.svg", "images/jakefarra-2.svg"]
+    photos: []
   },
   {
     id: "barefoot",
@@ -60,7 +63,7 @@ window.VENUES = [
     link: "https://barefootstudio.ee/stuudio",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/barefoot-1.svg", "images/barefoot-2.svg"]
+    photos: []
   },
   {
     id: "tulbi",
@@ -73,7 +76,7 @@ window.VENUES = [
     link: "https://tulbifoto.ee",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/tulbi-1.svg", "images/tulbi-2.svg"]
+    photos: []
   },
   {
     id: "photoroom",
@@ -86,7 +89,7 @@ window.VENUES = [
     link: "https://photoroom.ee",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/photoroom-1.svg", "images/photoroom-2.svg"]
+    photos: []
   },
   {
     id: "fotosioon",
@@ -99,7 +102,7 @@ window.VENUES = [
     link: "https://fotosioon.com/soovid-stuudiot-rentida",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/fotosioon-1.svg", "images/fotosioon-2.svg"]
+    photos: []
   },
   {
     id: "saal",
@@ -112,7 +115,7 @@ window.VENUES = [
     link: "https://saalstuudio.ee",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/saal-1.svg", "images/saal-2.svg"]
+    photos: []
   },
   {
     id: "makeupband",
@@ -125,7 +128,7 @@ window.VENUES = [
     link: "https://makeupband.ee/et/stuudio-rent",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/makeupband-1.svg", "images/makeupband-2.svg"]
+    photos: []
   },
   {
     id: "tagahoov",
@@ -138,7 +141,7 @@ window.VENUES = [
     link: "https://tagahoov.com",
     linkLabel: "Website",
     confirmParty: false,
-    photos: ["images/tagahoov-1.svg", "images/tagahoov-2.svg"]
+    photos: []
   },
   {
     id: "sihi37a",
@@ -151,7 +154,7 @@ window.VENUES = [
     link: "https://helinatilk.ee/peoruum",
     linkLabel: "Website",
     confirmParty: false,
-    photos: ["images/sihi37a-1.svg", "images/sihi37a-2.svg"]
+    photos: []
   },
   {
     id: "bakbak",
@@ -163,6 +166,6 @@ window.VENUES = [
     link: "https://bakbak.ee",
     linkLabel: "Website",
     confirmParty: true,
-    photos: ["images/bakbak-1.svg", "images/bakbak-2.svg"]
+    photos: []
   }
 ];

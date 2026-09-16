@@ -119,6 +119,57 @@
     return state.name ? (state.votes.get(state.name) || []) : [];
   }
 
+  /* ---------- placeholder art ---------- */
+
+  // Until real photos land, each venue gets its own bit of abstract colour
+  // rather than a grey "no image" box. The palette is picked from the venue
+  // id, so it's stable and neighbouring cards don't match.
+  var PALETTES = [
+    ["#f7d9e3", "#e3a8c2", "#7d3f5e"],
+    ["#fae3d4", "#eeb99f", "#98513f"],
+    ["#e8dcf4", "#c4abe2", "#584482"],
+    ["#dceae6", "#a9cec1", "#37695b"],
+    ["#fdeccd", "#f0cc8d", "#8b632c"],
+    ["#dde6f2", "#aec4e4", "#3a5480"]
+  ];
+
+  function hashCode(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    return h;
+  }
+
+  function monogram(name) {
+    var words = String(name).replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean);
+    if (!words.length) return "?";
+    if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+
+  function placeholder(venue) {
+    var pal = PALETTES[hashCode(venue.id) % PALETTES.length];
+    var box = document.createElement("div");
+    box.className = "placeholder";
+    box.style.setProperty("--ph-from", pal[0]);
+    box.style.setProperty("--ph-to", pal[1]);
+    box.style.setProperty("--ph-ink", pal[2]);
+    // the blobs are decorative, so nudge them per venue too
+    box.style.setProperty("--ph-x", (hashCode(venue.id + "x") % 50 + 20) + "%");
+    box.style.setProperty("--ph-y", (hashCode(venue.id + "y") % 50 + 20) + "%");
+
+    var mono = document.createElement("span");
+    mono.className = "placeholder__mono";
+    mono.textContent = monogram(venue.name);
+
+    var cap = document.createElement("span");
+    cap.className = "placeholder__cap";
+    cap.textContent = "Photo coming soon";
+
+    box.appendChild(mono);
+    box.appendChild(cap);
+    return box;
+  }
+
   /* ---------- rendering ---------- */
 
   function buildCards() {
@@ -129,16 +180,19 @@
       node.dataset.venue = v.id;
 
       var photos = node.querySelector("[data-photos]");
-      (v.photos || []).forEach(function (src, i) {
-        var img = document.createElement("img");
-        img.className = "photo";
-        img.src = src;
-        img.alt = v.name + " — photo " + (i + 1);
-        img.loading = i === 0 ? "eager" : "lazy";
-        img.decoding = "async";
-        photos.appendChild(img);
-      });
-      if (!(v.photos || []).length) photos.remove();
+      if ((v.photos || []).length) {
+        v.photos.forEach(function (src, i) {
+          var img = document.createElement("img");
+          img.className = "photo";
+          img.src = src;
+          img.alt = v.name + " — photo " + (i + 1);
+          img.loading = i === 0 ? "eager" : "lazy";
+          img.decoding = "async";
+          photos.appendChild(img);
+        });
+      } else {
+        photos.appendChild(placeholder(v));
+      }
 
       node.querySelector("[data-name]").textContent = v.name;
       node.querySelector("[data-area]").textContent = v.area || "";

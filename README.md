@@ -12,9 +12,7 @@ styles.css          the looks
 app.js              voting logic
 venues.js      ←    the only file you edit to change venues
 config.js      ←    your Supabase keys go here
-images/             venue photos (placeholders for now)
 supabase/schema.sql the one-time database setup
-scripts/            placeholder-art generator
 ```
 
 ---
@@ -111,28 +109,32 @@ Two things worth knowing:
   ten of us cover the bride's share. To change the divisor, edit `SPLIT_BETWEEN`
   at the top of `app.js`.
 
-### Real photos
+### Adding photos
 
-The images in `/images` are generated placeholders — the venue websites weren't
-reachable from where this was built, so nothing was scraped. To swap in the real
-thing:
+**There are no photos yet.** The venue websites weren't reachable from the
+environment this was built in, so nothing was scraped — every card currently
+draws a generated placeholder (a coloured panel with the venue's initials).
+They look deliberate rather than broken, so the page is fine to share as-is,
+but real photos will obviously sell the venues better.
 
-1. Save 1–3 photos per venue (from the venue's own site, their Instagram, or
-   screenshots). Aim for roughly 1200 px wide and under ~200 KB each —
-   [squoosh.app](https://squoosh.app) does this in the browser.
-2. Drop them in `/images` and point the venue's `photos` list at them:
-   `photos: ["images/barefoot-1.jpg", "images/barefoot-2.jpg"]`
-3. Delete the leftover `.svg` placeholders for that venue.
+To add them:
+
+1. Save 1–3 photos per venue — from the venue's own site, their Instagram, or
+   screenshots. Aim for roughly 1200 px wide and under ~200 KB each;
+   [squoosh.app](https://squoosh.app) does the compressing in the browser.
+2. Make an `images/` folder, drop them in, and list them on the venue:
+
+   ```js
+   photos: ["images/barefoot-1.jpg", "images/barefoot-2.jpg"]
+   ```
+
+3. Commit and push. Any venue still on `photos: []` keeps its placeholder, so
+   you can do this a few venues at a time.
 
 Cards show the first photo large; extra ones become a swipe-through gallery.
 
-If you add a new venue and want a placeholder for it in the meantime:
-
-```sh
-node scripts/make-placeholders.mjs
-```
-
-It only creates files that don't exist yet, so it can never overwrite a real photo.
+For the Instagram-only venue (Stuudio323) a screenshot of their grid works
+fine, or send me a public post URL and I'll wire up a proper embed.
 
 ---
 
